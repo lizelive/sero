@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<EntityComponents>
+    <EntityComponent xsi:type="MyObjectBuilder_InventoryComponentDefinition">
+      <Id>
+        <TypeId>Inventory</TypeId>
+        <SubtypeId>HydrogenEngine</SubtypeId>
+      </Id>
+      <Volume>1</Volume>
+      <InputConstraint IsWhitelist="true">
+        <Entry>
+          <TypeId>Ore</TypeId>
+          <SubtypeId>Ice</SubtypeId>
+        </Entry>
+      </InputConstraint>
+    </EntityComponent>
+  </EntityComponents>
+
+  <EntityContainers>
+    <Container>
+      <Id>
+        <TypeId>HydrogenEngine</TypeId>
+        <SubtypeId>LargeHydrogenEngine</SubtypeId>
+      </Id>
+      <DefaultComponents>
+        <Component BuilderType="MyObjectBuilder_Inventory" SubtypeId="HydrogenEngine" ForceCreate="true"/>
+      </DefaultComponents>
+    </Container>
+  </EntityContainers>
+
+</Definitions>

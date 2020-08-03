@@ -1,0 +1,6 @@
+MOD_ERROR: Script1, in file: 
+Compilation of C:\Users\Lize\AppData\Roaming\SpaceEngineers\Mods\Script1_TestScript failed:
+MOD_ERROR: Script1, in file: 
+C:\Users\Lize\AppData\Roaming\SpaceEngineers\Mods\Script1\Data\Scripts\TestScript\obj\Debug\.NETFramework,Version=v4.5.AssemblyAttributes.cs(4,11): Error: The type or member 'TargetFrameworkAttribute.TargetFrameworkAttribute(string frameworkName)' is prohibited
+MOD_ERROR: Script1, in file: 
+C:\Users\Lize\AppData\Roaming\SpaceEngineers\Mods\Script1\Data\Scripts\TestScript\obj\Debug\.NETFramework,Version=v4.5.AssemblyAttributes.cs(4,100): Error: The type or member 'string TargetFrameworkAttribute.FrameworkDisplayName' is prohibited
