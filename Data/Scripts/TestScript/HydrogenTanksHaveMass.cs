@@ -33,6 +33,7 @@ namespace TestScript
 
             block = (IMyGasTank)Entity;
 
+            MyLog.Default.WriteLine("fa44ba67-7ae8-46b9-9121-5d54f4319cd7");
 
             NeedsUpdate = MyEntityUpdateEnum.EACH_FRAME | MyEntityUpdateEnum.EACH_100TH_FRAME;
             if (MyAPIGateway.Multiplayer.IsServer)

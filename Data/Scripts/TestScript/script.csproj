@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrainHurtJuice.cs" />
     <Compile Include="HydrogenGenerators.cs" />
     <Compile Include="HydrogenTanksHaveMass.cs" />
     <Compile Include="ModAPISample.cs" />
