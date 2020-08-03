@@ -6,7 +6,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "script", "script.csproj", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deffs", "deffs", "{498E278F-A4C8-4186-AE28-7DD7C95DE12C}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\Hydrogen_Cubeblocks.sbc = ..\..\Hydrogen_Cubeblocks.sbc
+		..\..\Containers.sbc = ..\..\Containers.sbc
+		..\..\CubeBlocks_Energy.sbc = ..\..\CubeBlocks_Energy.sbc
+		..\..\CubeBlocks_Thrusters.sbc = ..\..\CubeBlocks_Thrusters.sbc
+		..\..\Gasses.sbc = ..\..\Gasses.sbc
+		..\..\Oxygen_Thrusters.sbc = ..\..\Oxygen_Thrusters.sbc
+		..\..\OxygenGenerators.sbc = ..\..\OxygenGenerators.sbc
+		..\..\PhysicalItems.sbc = ..\..\PhysicalItems.sbc
+		..\..\Tanks.sbc = ..\..\Tanks.sbc
 	EndProjectSection
 EndProject
 Global

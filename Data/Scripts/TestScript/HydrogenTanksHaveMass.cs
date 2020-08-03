@@ -24,21 +24,6 @@ namespace TestScript
     {
         IMyGasTank block;
 
-        struct GasInfo
-        {
-            public string Name;
-            public double AtomicMass;
-            public double LiquidLPerKg;
-            public double GasLPerKg;
-            public GasInfo(string name, double atomicMass, double liquidLPerKg, double gasLPerKg)
-            {
-                Name = name;
-                AtomicMass = atomicMass;
-                LiquidLPerKg = liquidLPerKg;
-                GasLPerKg = gasLPerKg;
-            }
-        }
-
         float gasKgPerL = 0.083f;
         float volumeM3 = 0;
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
@@ -49,19 +34,19 @@ namespace TestScript
             block = (IMyGasTank)Entity;
 
 
+            NeedsUpdate = MyEntityUpdateEnum.EACH_FRAME | MyEntityUpdateEnum.EACH_100TH_FRAME;
             if (MyAPIGateway.Multiplayer.IsServer)
             {
                 NeedsUpdate = MyEntityUpdateEnum.BEFORE_NEXT_FRAME | MyEntityUpdateEnum.EACH_100TH_FRAME | MyEntityUpdateEnum.EACH_FRAME; // allow UpdateOnceBeforeFrame() to execute, remove if not needed
             }
 
 
-            /*
             var type = block.ResourceSink.AcceptedResources.First(x => x.TypeId == typeof(MyObjectBuilder_GasProperties));
             if (type.SubtypeName == "Hydrogen")
                 gasKgPerL = 0.071f;
             if (type.SubtypeName == "Oxygen")
                 gasKgPerL = 1.140f;
-            */
+
             block.AppendingCustomInfo += Block_AppendingCustomInfo;
 
             volumeM3 = (block.Min - block.Max).Size * (float)Math.Pow(2.5, 3);
@@ -91,9 +76,6 @@ namespace TestScript
             var phys = block.Physics;
             if (phys == null)
                 return;
-
-            MyAPIGateway.Utilities.ShowMessage("butts", $"Tank p={gasKgPerL} kg={massOfGass} f={force} d={airDisplacement} fog={fartsOfGlory}");
-
             var pos = phys.CenterOfMassWorld;
             float natGravity = 0;
             var gravity = MyAPIGateway.Physics.CalculateNaturalGravityAt(pos, out natGravity);
