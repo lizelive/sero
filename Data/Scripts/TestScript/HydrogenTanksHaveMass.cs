@@ -18,7 +18,7 @@ using VRageMath;
 
 namespace TestScript
 {
-    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_GasTank), false)]
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_OxygenTank), false)]
 
     class HydrogenTanksHaveMass: MyGameLogicComponent
     {
@@ -35,19 +35,20 @@ namespace TestScript
 
             MyLog.Default.WriteLine("fa44ba67-7ae8-46b9-9121-5d54f4319cd7");
 
-            NeedsUpdate = MyEntityUpdateEnum.EACH_FRAME | MyEntityUpdateEnum.EACH_100TH_FRAME;
             if (MyAPIGateway.Multiplayer.IsServer)
             {
                 NeedsUpdate = MyEntityUpdateEnum.BEFORE_NEXT_FRAME | MyEntityUpdateEnum.EACH_100TH_FRAME | MyEntityUpdateEnum.EACH_FRAME; // allow UpdateOnceBeforeFrame() to execute, remove if not needed
             }
 
 
-            var type = block.ResourceSink.AcceptedResources.First(x => x.TypeId == typeof(MyObjectBuilder_GasProperties));
-            if (type.SubtypeName == "Hydrogen")
-                gasKgPerL = 0.071f;
-            if (type.SubtypeName == "Oxygen")
-                gasKgPerL = 1.140f;
-
+            var type = block.ResourceSink.AcceptedResources.FirstOrDefault(x => x.TypeId == typeof(MyObjectBuilder_GasProperties));
+            if (type != null)
+            {
+                if (type.SubtypeName == "Hydrogen")
+                    gasKgPerL = 0.071f;
+                if (type.SubtypeName == "Oxygen")
+                    gasKgPerL = 1.140f;
+            }
             block.AppendingCustomInfo += Block_AppendingCustomInfo;
 
             volumeM3 = (block.Min - block.Max).Size * (float)Math.Pow(2.5, 3);

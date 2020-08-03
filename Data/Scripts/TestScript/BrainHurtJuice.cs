@@ -7,7 +7,7 @@ using VRage.Utils;
 
 namespace TestScript
 {
-    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_GasTank), false, "LargeHydrogenTank")]
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_OxygenTank), false)]
 
     class BrainHurtJuice : MyGameLogicComponent
     {
@@ -20,7 +20,7 @@ namespace TestScript
 
         public override void UpdateAfterSimulation100()
         {
-            MyAPIGateway.Utilities.ShowMessage("herp", "derp");
+            //MyAPIGateway.Utilities.ShowMessage("herp", "derp");
         }
     }
 }
