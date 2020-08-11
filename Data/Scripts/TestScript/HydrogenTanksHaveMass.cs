@@ -1,5 +1,8 @@
 ﻿using Sandbox.Common.ObjectBuilders;
+using Sandbox.Definitions;
 using Sandbox.Game.Entities;
+using Sandbox.Game.Entities.Blocks;
+using Sandbox.Game.Screens.ViewModels;
 using Sandbox.ModAPI;
 using System;
 using System.Collections.Generic;
@@ -7,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using VRage.Game;
 using VRage.Game.Components;
 using VRage.Game.ModAPI;
 using VRage.Game.ObjectBuilders.Definitions;
@@ -18,14 +20,15 @@ using VRageMath;
 
 namespace TestScript
 {
-    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_OxygenTank), false)]
 
-    class HydrogenTanksHaveMass: MyGameLogicComponent
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_OxygenTank), false)]
+    class HydrogenTanksHaveMass : MyGameLogicComponent
     {
         IMyGasTank block;
 
-        float gasKgPerL = 0.083f;
+        float gasKgPerL = 1f;
         float volumeM3 = 0;
+        AddedMassInventory addedMass;
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
             // this method is called async! always do stuff in the first update unless you're sure it must be in this one.
@@ -33,62 +36,51 @@ namespace TestScript
 
             block = (IMyGasTank)Entity;
 
-            MyLog.Default.WriteLine("fa44ba67-7ae8-46b9-9121-5d54f4319cd7");
-
             if (MyAPIGateway.Multiplayer.IsServer)
             {
-                NeedsUpdate = MyEntityUpdateEnum.BEFORE_NEXT_FRAME | MyEntityUpdateEnum.EACH_100TH_FRAME | MyEntityUpdateEnum.EACH_FRAME; // allow UpdateOnceBeforeFrame() to execute, remove if not needed
-            }
-
-
-            var type = block.ResourceSink.AcceptedResources.FirstOrDefault(x => x.TypeId == typeof(MyObjectBuilder_GasProperties));
-            if (type != null)
-            {
-                if (type.SubtypeName == "Hydrogen")
+                NeedsUpdate = MyEntityUpdateEnum.BEFORE_NEXT_FRAME | MyEntityUpdateEnum.EACH_100TH_FRAME; // allow UpdateOnceBeforeFrame() to execute, remove if not needed
+                addedMass = AddedMassInventory.SetupFor(block);
+                var tankType = block.DefinitionDisplayNameText;
+                if (tankType.Contains("Hydrogen"))
                     gasKgPerL = 0.071f;
-                if (type.SubtypeName == "Oxygen")
+                if (tankType.Contains("Oxygen"))
                     gasKgPerL = 1.140f;
             }
-            block.AppendingCustomInfo += Block_AppendingCustomInfo;
-
-            volumeM3 = (block.Min - block.Max).Size * (float)Math.Pow(2.5, 3);
-            
-            //var h = new GasInfo("Hydrogen",1.00794, 14.132, 11.988/ 1000);0.083
-            //var o = new GasInfo("Oxygen", 15.9994, 0.876, 0.754 / 1000);
         }
-
-        private void Block_AppendingCustomInfo(IMyTerminalBlock block, StringBuilder sb)
-        {
-            sb.AppendLine($"Tank p={gasKgPerL} kg={massOfGass} f={force} d={airDisplacement} fog={fartsOfGlory}");
-        }
-
 
         public override void UpdateAfterSimulation100()
         {
-            MyAPIGateway.Utilities.ShowMessage("uwu", $"Tank p={gasKgPerL} kg={massOfGass} f={force} d={airDisplacement} fog={fartsOfGlory}");
-            block.RefreshCustomInfo();
+            addedMass.AddedMass = block.FilledRatio * block.Capacity * gasKgPerL;
         }
 
-        float massOfGass, airDisplacement;
-        Vector3 force, fartsOfGlory;
+        //float massOfGass, airDisplacement;
+        //Vector3 force, fartsOfGlory;
 
-        // i want the large gas tank to weigh 6625kg
-        public override void UpdateAfterSimulation()
-        {
-            var phys = block.Physics;
-            if (phys == null)
-                return;
-            var pos = phys.CenterOfMassWorld;
-            float natGravity = 0;
-            var gravity = MyAPIGateway.Physics.CalculateNaturalGravityAt(pos, out natGravity);
-            var m3ofgas = block.FilledRatio * block.Capacity;
-            massOfGass = (float)(m3ofgas * gasKgPerL); // this is hydrogen only need to 
-            var planent = MyGamePruningStructure.GetClosestPlanet(pos);
-            var airDensity = planent.GetAirDensity(pos);
-            airDisplacement = airDensity * volumeM3; //just i don't even know. going to assume air has 1kg/m^3 because fml
-            fartsOfGlory = phys.LinearAcceleration * massOfGass;
-            force = (massOfGass - airDisplacement) * gravity - fartsOfGlory;
-            phys.AddForce(MyPhysicsForceType.APPLY_WORLD_FORCE, force, null, null);
-        }
+        //// i want the large gas tank to weigh 6625kg
+        //public override void UpdateAfterSimulation()
+        //{
+        //    var phys = block.CubeGrid?.Physics;
+        //    if (phys == null)
+        //        return;
+        //    var pos = phys.CenterOfMassWorld;
+        //    float natGravity = 0;
+        //    var gravity = MyAPIGateway.Physics.CalculateNaturalGravityAt(pos, out natGravity);
+        //    var m3ofgas = block.FilledRatio * block.Capacity;
+        //    massOfGass = (float)(m3ofgas * gasKgPerL); // this is hydrogen only need to 
+        //    var planent = MyGamePruningStructure.GetClosestPlanet(pos);
+        //    if (planent == null)
+        //    {
+        //        airDisplacement = 0;
+        //    }
+        //    else
+        //    {
+        //        var airDensity = planent.GetAirDensity(pos);
+        //        airDisplacement = airDensity * volumeM3; //just i don't even know. going to assume air has 1kg/m^3 because fml
+        //    }
+            
+        //    fartsOfGlory = phys.LinearAcceleration * massOfGass;
+        //    force = (massOfGass - airDisplacement) * gravity - fartsOfGlory;
+        //    phys.AddForce(MyPhysicsForceType.APPLY_WORLD_FORCE, force, null, null);
+        //}
     }
 }

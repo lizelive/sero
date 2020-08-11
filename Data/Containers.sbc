@@ -26,6 +26,15 @@
         <Component BuilderType="MyObjectBuilder_Inventory" SubtypeId="HydrogenEngine" ForceCreate="true"/>
       </DefaultComponents>
     </Container>
+    <Container>
+      <Id>
+        <TypeId>HydrogenEngine</TypeId>
+        <SubtypeId>SmallHydrogenEngine</SubtypeId>
+      </Id>
+      <DefaultComponents>
+        <Component BuilderType="MyObjectBuilder_Inventory" SubtypeId="HydrogenEngine" ForceCreate="true"/>
+      </DefaultComponents>
+    </Container>
   </EntityContainers>
 
 </Definitions>

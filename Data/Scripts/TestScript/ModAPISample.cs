@@ -22,7 +22,8 @@ using Sandbox.ModAPI;
    
    You can define your own namespaces / classes / methods to call 
  */ 
- 
+ //call serealistm 
+
 namespace TestScript 
 {
     class Script
@@ -38,5 +39,9 @@ namespace TestScript
       {
           MyAPIGateway.Utilities.ShowMissionScreen();
       }
+
+        static public void Fill()
+        {
+        }
    }
 }

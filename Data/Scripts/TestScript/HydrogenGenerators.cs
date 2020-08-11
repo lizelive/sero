@@ -2,6 +2,7 @@
 using Sandbox.Common.ObjectBuilders.Definitions;
 using Sandbox.Game;
 using Sandbox.Game.Entities;
+using Sandbox.Game.EntityComponents;
 using Sandbox.ModAPI;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 using VRage.Game;
 using VRage.Game.Components;
 using VRage.Game.ModAPI;
+using VRage.Game.ObjectBuilders.Definitions;
 using VRage.ModAPI;
 using VRage.ObjectBuilders;
 using VRage.Utils;
@@ -25,10 +27,43 @@ namespace TestScript
         private IMyPowerProducer block; // storing the entity as a block reference to avoid re-casting it every time it's needed
         MyObjectBuilder_Ore Ice = new MyObjectBuilder_Ore() { SubtypeName = "Ice" };
 
+
+
+        private static readonly MyDefinitionId oxygenDef = new MyDefinitionId(typeof(MyObjectBuilder_GasProperties), "Oxygen");
+        private static readonly MyDefinitionId hydrogenDef = new MyDefinitionId(typeof(MyObjectBuilder_GasProperties), "Hydrogen");
+        private MyResourceSinkComponent sink;
+        private MyResourceSinkInfo sinkInfo;
+
         /// <summary>
         /// 1kg ice = 1.501*2790.0e-6 + 0.670*55.6e-6 mwh
         /// </summary>
         const float MWH_PER_KG_OF_ICE = 0.004225042f;
+        public MyObjectBuilder_GasProperties hydrogenGasProperties;
+        float GetOxygenRequired()
+        {
+            return hydrogenSink.CurrentInputByType(hydrogenDef) / 2;
+        }
+        MyResourceSinkComponent hydrogenSink;
+        private void SinkSetup()
+        {
+            hydrogenSink = Entity.Components.Get<MyResourceSinkComponent>();
+            var maxHydrogenRequired = hydrogenSink.MaxRequiredInputByType(hydrogenDef);
+            var maxOxygenRequired = maxHydrogenRequired / 2;
+            sinkInfo = new MyResourceSinkInfo()
+            {
+                ResourceTypeId = oxygenDef,
+                MaxRequiredInput = maxHydrogenRequired,
+                RequiredInputFunc = GetOxygenRequired
+            };
+
+            sink = hydrogenSink;
+
+            sink.AddType(ref sinkInfo);
+           
+            Entity.Components.Add(sink);
+            sink.Update();
+        }
+
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
             // this method is called async! always do stuff in the first update unless you're sure it must be in this one.

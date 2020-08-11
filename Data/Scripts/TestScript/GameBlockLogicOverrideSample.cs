@@ -54,6 +54,7 @@ namespace TestScript
            m_objectBuilder = objectBuilder;
            Sensor = Entity as Sandbox.ModAPI.IMySensorBlock;
            Sensor.StateChanged += sensor_StateChanged;
+
        }
 
        void sensor_StateChanged(bool obj)

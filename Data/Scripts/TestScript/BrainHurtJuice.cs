@@ -1,5 +1,6 @@
 ﻿using Sandbox.Common.ObjectBuilders;
 using Sandbox.ModAPI;
+using VRage.Game;
 using VRage.Game.Components;
 using VRage.ModAPI;
 using VRage.ObjectBuilders;
@@ -11,6 +12,10 @@ namespace TestScript
 
     class BrainHurtJuice : MyGameLogicComponent
     {
+        private void ChangeComponents(MyDefinitionId defid)
+        {
+
+        }
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
@@ -22,5 +27,6 @@ namespace TestScript
         {
             //MyAPIGateway.Utilities.ShowMessage("herp", "derp");
         }
+
     }
 }
