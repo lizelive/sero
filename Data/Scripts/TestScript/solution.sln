@@ -9,15 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deffs", "deffs", "{498E278F
 		..\..\Blueprints_Assemble.sbc = ..\..\Blueprints_Assemble.sbc
 		..\..\Blueprints_Refine.sbc = ..\..\Blueprints_Refine.sbc
 		..\..\Containers.sbc = ..\..\Containers.sbc
-		..\..\CubeBlocks_Energy.sbc = ..\..\CubeBlocks_Energy.sbc
-		..\..\CubeBlocks_HydrogenTanks.sbc = ..\..\CubeBlocks_HydrogenTanks.sbc
 		..\..\CubeBlocks_Refineries.sbc = ..\..\CubeBlocks_Refineries.sbc
-		..\..\CubeBlocks_Thrusters.sbc = ..\..\CubeBlocks_Thrusters.sbc
 		..\..\Gasses.sbc = ..\..\Gasses.sbc
-		..\..\IronEngine.sbc = ..\..\IronEngine.sbc
 		..\..\Oxygen_Thrusters.sbc = ..\..\Oxygen_Thrusters.sbc
 		..\..\OxygenGenerators.sbc = ..\..\OxygenGenerators.sbc
-		..\..\PhysicalItems.sbc = ..\..\PhysicalItems.sbc
 	EndProjectSection
 EndProject
 Global

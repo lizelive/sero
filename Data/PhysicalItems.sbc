@@ -1,33 +1,6 @@
 <?xml version="1.0"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <PhysicalItems>
-        <PhysicalItem>
-            <Id>
-                <TypeId>Ingot</TypeId>
-                <SubtypeId>Hydrogen</SubtypeId>
-            </Id>
-            <DisplayName>DisplayName_Item_HydrogenIngot</DisplayName>
-            <Icon>Textures\GUI\Icons\ingot\silver_ingot.dds</Icon>
-            <Size>
-                <X>0.046</X>
-                <Y>0.046</Y>
-                <Z>0.046</Z>
-            </Size>
-            <Mass>1</Mass>
-            <Volume>1.66</Volume>
-            <Model>Models\Ingots\silver_ingot.mwm</Model>
-            <PhysicalMaterial>Metal</PhysicalMaterial>
-            <IconSymbol>IconSymbol_Ag</IconSymbol>
-            <MinimumOfferAmount>500</MinimumOfferAmount>
-            <MaximumOfferAmount>5000</MaximumOfferAmount>
-            <MinimumOrderAmount>30</MinimumOrderAmount>
-            <MaximumOrderAmount>3000</MaximumOrderAmount>
-            <CanPlayerOrder>true</CanPlayerOrder>
-
-            <MinimumAcquisitionAmount>100</MinimumAcquisitionAmount>
-            <MaximumAcquisitionAmount>500</MaximumAcquisitionAmount>
-        </PhysicalItem>
-        
+    <PhysicalItems>        
         <PhysicalItem>
             <Id>
                 <TypeId>Ore</TypeId>

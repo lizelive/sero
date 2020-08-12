@@ -77,8 +77,10 @@
     <Compile Include="GasTankDefinition.cs" />
     <Compile Include="HydrogenGenerators.cs" />
     <Compile Include="HydrogenTanksHaveMass.cs" />
+    <Compile Include="Jumpdrives.cs" />
     <Compile Include="ModAPISample.cs" />
     <Compile Include="GameBlockLogicOverrideSample.cs" />
+    <Compile Include="OreDetectors.cs" />
     <Compile Include="PhysicsData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

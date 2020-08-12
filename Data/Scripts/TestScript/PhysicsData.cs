@@ -40,12 +40,21 @@ namespace TestScript
             Energy = 119.93* 2 / 18 * MJ,
             Volume = PhysicsData.VOLUME_1kg_LIQUID_LOXH2,
         };
+
+        public static readonly Fuel Electric = new Fuel
+        {
+            Name = "MJ",
+            Energy = 1 * MJ,
+            Volume = 1,
+        };
     }
 
     class ThrusterData
     {
         public string Name { get; set; }
         public double Mass { get; set; }
+
+        public double MaxThrust => Mass * PhysicsData.G0 * TWR;
         public double TWR { get; set; }
         public double IspSea { get; set; }
         public double IspVac { get; set; }
@@ -65,6 +74,18 @@ namespace TestScript
             Fuel = Fuel.HydrogenOxygen
         };
 
+        public static readonly ThrusterData DjiQuadcopter = new ThrusterData
+        {
+            Name = "Electric Turbine",
+            IspSea = 11.72,
+            IspVac = 0,
+            Mass = 100 * kg / 4, // this is 1k times the mass.
+            TWR = 36.36/4,
+            Length = 28*mm,
+            Diameter = 250 * mm,
+            Fuel = Fuel.Electric
+        };
+
         // to add https://en.wikipedia.org/wiki/Cold_gas_thruster#Specific_Impulse
     }
 
@@ -73,6 +94,9 @@ namespace TestScript
         public const double kg = 1;
         public const double s = 1;
         public const double m = 1;
+        public const double g = kg / 1000;
+        public const double mm = m / 1000;
+
         public const double N = kg * m / (s * s);
         public const double J = N * m;
         public const double MJ = 1e6 * J;
