@@ -10,7 +10,7 @@ using VRageMath;
 namespace TestScript
 {
     /// <summary>
-    /// Solved by comfyfutons 
+    /// Solved by Digi and comfyfutons
     /// https://steamcommunity.com/sharedfiles/filedetails/?id=2048290970
     /// </summary>
     class AddedMassInventory : MyInventory

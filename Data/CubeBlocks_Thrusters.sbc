@@ -500,9 +500,9 @@
         <Component Subtype="SteelPlate" Count="15" />
         <Component Subtype="Construction" Count="40" />
         <Component Subtype="MetalGrid" Count="40" />
-        <Component Subtype="LargeTube" Count="8" />
-        <Component Subtype="Construction" Count="20" />
-        <Component Subtype="SteelPlate" Count="10" />
+        <Component Subtype="LargeTube" Count="60" />
+        <Component Subtype="Construction" Count="40" />
+        <Component Subtype="SteelPlate" Count="20" />
       </Components>
       <CriticalComponent Subtype="LargeTube" Index="0" />
       <MountPoints>

@@ -1,22 +1,31 @@
 <?xml version="1.0"?>
 <Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-<GasProperties>
-      <Gas>
-        <Id>
-          <TypeId>MyObjectBuilder_GasProperties</TypeId>
-          <SubtypeId>Oxygen</SubtypeId>
-        </Id>
-        <EnergyDensity>55.6e-6</EnergyDensity>
-        <!-- Using wikipedia https://en.wikipedia.org/wiki/Energy_density -->
-      </Gas>
+  <GasProperties>
+    <!-- MWh/litres liquid -->
+    <!-- Using wikipedia https://en.wikipedia.org/wiki/Energy_density -->
+    <Gas>
+      <Id>
+        <TypeId>MyObjectBuilder_GasProperties</TypeId>
+        <SubtypeId>Oxygen</SubtypeId>
+      </Id>
+      <EnergyDensity>55.6e-6</EnergyDensity>
+    </Gas>
+    <Gas>
+      <Id>
+        <TypeId>MyObjectBuilder_GasProperties</TypeId>
+        <SubtypeId>Hydrogen</SubtypeId>
+      </Id>
+      <EnergyDensity>1572.4e-6</EnergyDensity>
+      
+    </Gas>
+    <!--
       <Gas>
         <Id>
           <TypeId>MyObjectBuilder_GasProperties</TypeId>
           <SubtypeId>Hydrogen</SubtypeId>
         </Id>
-        <EnergyDensity>2790.0e-6</EnergyDensity>
-        <!-- MWh/litres -->
-        <!-- liquid -->
+        <EnergyDensity>2358.6e-6</EnergyDensity>
       </Gas>
-    </GasProperties>
+      -->
+  </GasProperties>
 </Definitions>

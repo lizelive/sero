@@ -26,7 +26,7 @@ namespace TestScript
             switch (size)
             {
                 case MyCubeSize.Large:
-                    return 1.5f;
+                    return 2.5f;
                 case MyCubeSize.Small:
                     return 0.5f;
                 default:

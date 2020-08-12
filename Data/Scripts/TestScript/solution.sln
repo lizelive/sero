@@ -18,7 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deffs", "deffs", "{498E278F
 		..\..\Oxygen_Thrusters.sbc = ..\..\Oxygen_Thrusters.sbc
 		..\..\OxygenGenerators.sbc = ..\..\OxygenGenerators.sbc
 		..\..\PhysicalItems.sbc = ..\..\PhysicalItems.sbc
-		..\..\Tanks.sbc = ..\..\Tanks.sbc
 	EndProjectSection
 EndProject
 Global
