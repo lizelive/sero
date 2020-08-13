@@ -1,40 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
-    <Reference Include="Sandbox.Game">
-      <HintPath>D:\games\SteamLibrary\steamapps\common\SpaceEngineers\..\SpaceEngineers\Bin64\\Sandbox.Game.dll</HintPath>
-    </Reference>
-    <Reference Include="Sandbox.Common">
-      <HintPath>D:\games\SteamLibrary\steamapps\common\SpaceEngineers\..\SpaceEngineers\Bin64\\Sandbox.Common.dll </HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="VRage">
-      <HintPath>D:\games\SteamLibrary\steamapps\common\SpaceEngineers\..\SpaceEngineers\Bin64\\VRage.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Library">
-      <HintPath>D:\games\SteamLibrary\steamapps\common\SpaceEngineers\..\SpaceEngineers\Bin64\\VRage.Library.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Math">
-      <HintPath>D:\games\SteamLibrary\steamapps\common\SpaceEngineers\..\SpaceEngineers\Bin64\\VRage.Math.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Game">
-      <HintPath>D:\games\SteamLibrary\steamapps\common\SpaceEngineers\..\SpaceEngineers\Bin64\\VRage.Game.dll</HintPath>
-    </Reference>
-    <Reference Include="VRage.Render">
-      <HintPath>D:\games\SteamLibrary\steamapps\common\SpaceEngineers\..\SpaceEngineers\Bin64\\VRage.Render.dll</HintPath>
-    </Reference>
-    <Reference Include="SpaceEngineers.ObjectBuilders">
-      <HintPath>D:\games\SteamLibrary\steamapps\common\SpaceEngineers\..\SpaceEngineers\Bin64\\SpaceEngineers.ObjectBuilders.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+  <Import Project="paths.props" />
 </Project>
