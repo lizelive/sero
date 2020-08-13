@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static TestScript.Unit;
+using static SERO.Unit;
 
-namespace TestScript
+namespace SERO
 {
     enum EngineFuelType
     {

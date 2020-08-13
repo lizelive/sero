@@ -15,9 +15,9 @@ using VRage.Game.Components;
 using VRage.Utils;
 using VRageMath;
 using VRageRender.Messages;
-using static TestScript.Unit;
+using static SERO.Unit;
 
-namespace TestScript
+namespace SERO
 {
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     class GasRedef : MySessionComponentBase

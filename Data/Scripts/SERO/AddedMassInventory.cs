@@ -7,7 +7,7 @@ using VRage.Game.Entity;
 using VRage.ModAPI;
 using VRageMath;
 
-namespace TestScript
+namespace SERO
 {
     /// <summary>
     /// Solved by Digi and comfyfutons

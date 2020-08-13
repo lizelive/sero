@@ -23,7 +23,7 @@ using VRage;
   in this case simple script is prepared that will alter behaviour of sensor block
   This type of scripts will be executed automatically  when sensor (or your defined) block is added to world
  */
-namespace TestScript
+namespace SERO
 {
    //here you can use any objectbuiler e.g. MyObjectBuilder_Door, MyObjectBuilder_Decoy
    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_SensorBlock), false)]

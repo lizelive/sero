@@ -26,7 +26,7 @@ using VRage;
 using IMyGridTerminalSystem = Sandbox.ModAPI.Ingame.IMyGridTerminalSystem;
 using IMySensorBlock = Sandbox.ModAPI.Ingame.IMySensorBlock;
 
-namespace TestScript
+namespace SERO
 {
     [MyEntityComponentDescriptor(typeof(MyObjectBuilder_OxygenTank), false)]
 

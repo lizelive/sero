@@ -18,7 +18,7 @@ using VRage.ObjectBuilders;
 using VRage.Utils;
 using VRageMath;
 
-namespace TestScript
+namespace SERO
 {
 
     [MyEntityComponentDescriptor(typeof(MyObjectBuilder_OxygenTank), false)]

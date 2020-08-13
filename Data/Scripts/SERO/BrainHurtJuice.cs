@@ -6,7 +6,7 @@ using VRage.ModAPI;
 using VRage.ObjectBuilders;
 using VRage.Utils;
 
-namespace TestScript
+namespace SERO
 {
     [MyEntityComponentDescriptor(typeof(MyObjectBuilder_OxygenTank), false)]
 

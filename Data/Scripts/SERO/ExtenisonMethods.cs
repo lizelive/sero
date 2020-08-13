@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using VRage.Game;
 using VRageMath;
 
-namespace TestScript
+namespace SERO
 {
     public static class ExtenisonMethods
     {

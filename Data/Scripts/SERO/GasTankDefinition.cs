@@ -1,4 +1,4 @@
-﻿namespace TestScript
+﻿namespace SERO
 {
     internal class GasTankDefinition
     {

@@ -9,7 +9,7 @@ using VRage.ObjectBuilders;
 using VRage.Game.Components;
 using VRage.ModAPI;
 
-namespace TestScript
+namespace SERO
 {
     [MyEntityComponentDescriptor(typeof(MyObjectBuilder_GravityGenerator), false, new string[] { })]
     public class GravityGeneratorFlat : IndustrialAutomaton_Gravity { }

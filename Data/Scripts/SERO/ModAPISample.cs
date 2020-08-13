@@ -13,18 +13,18 @@ using Sandbox.ModAPI;
   please press F11 to see if there was any loading error during loading of the mod. When there is no mod loading errors  
   you can activate mod by opening chat window (by pressing Enter key). Than you need to call Main method of script class. 
    
-  To do that you need to write this command : //call Script1_TestScript TestScript.Script ShowHelloWorld
+  To do that you need to write this command : //call Script1_SERO SERO.Script ShowHelloWorld
   //call means that you want to call script
-  Script1_TestScript is name of directory (if you have more script directories e.g. Script1, Script2 ... you need to change Script1 to your actual directory)
-  TestScript.Script is name of tthe class with namespace , if you define new class you need to use new name e.g. when you create class Test in TestScript namespace
-  you need to write : TestScript.Test 
+  Script1_SERO is name of directory (if you have more script directories e.g. Script1, Script2 ... you need to change Script1 to your actual directory)
+  SERO.Script is name of tthe class with namespace , if you define new class you need to use new name e.g. when you create class Test in SERO namespace
+  you need to write : SERO.Test 
   ShowHelloWorld is name of method, you can call only public static methods from chat window. 
    
    You can define your own namespaces / classes / methods to call 
  */ 
  //call serealistm 
 
-namespace TestScript 
+namespace SERO 
 {
     class Script
     {
