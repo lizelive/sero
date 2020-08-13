@@ -33,7 +33,7 @@ namespace TestScript
         {
             // this method is called async! always do stuff in the first update unless you're sure it must be in this one.
             // NOTE the objectBuilder arg is not the Entity's but the component's, and since the component wasn't loaded from an OB that means it's always null, which it is (AFAIK).
-
+            
             block = (IMyGasTank)Entity;
 
             if (MyAPIGateway.Multiplayer.IsServer)

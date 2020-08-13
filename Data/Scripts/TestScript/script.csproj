@@ -75,13 +75,14 @@
     <Compile Include="ExtenisonMethods.cs" />
     <Compile Include="GasRedef.cs" />
     <Compile Include="GasTankDefinition.cs" />
+    <Compile Include="Gravity.cs" />
     <Compile Include="HydrogenGenerators.cs" />
     <Compile Include="HydrogenTanksHaveMass.cs" />
     <Compile Include="Jumpdrives.cs" />
     <Compile Include="ModAPISample.cs" />
     <Compile Include="GameBlockLogicOverrideSample.cs" />
-    <Compile Include="OreDetectors.cs" />
     <Compile Include="PhysicsData.cs" />
+    <Compile Include="Radation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.  

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TestScript
 {
+    /// <summary>
+    /// So when you jump insted of jumping it spawns a portal and you need to fly through it
+    /// </summary>
     class Jumpdrives
     {
     }
