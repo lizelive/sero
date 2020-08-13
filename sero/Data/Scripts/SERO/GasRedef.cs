@@ -56,6 +56,15 @@ namespace SERO
             }
 
 
+            foreach(var oreDetector in allDefs.OfType<MyOreDetectorDefinition>())
+            {
+                // ore detectors should be 10x longer
+                var diameter = oreDetector.GetDiameter();
+                oreDetector.MaximumRange = diameter * 100;
+                
+            }
+
+
             foreach(var wheelDef in allDefs.OfType<MyMotorSuspensionDefinition>())
             {
                 // wheels in this game should be way more powerful

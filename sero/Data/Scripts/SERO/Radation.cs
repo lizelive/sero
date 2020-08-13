@@ -32,7 +32,7 @@ namespace SERO
         public static void Oops(RadEvent e)
         {
             Instance.events.Add(e);
-            MyAPIGateway.Utilities.ShowMessage("Hello", "World !");
+            MyAPIGateway.Utilities.ShowMessage("Hello", e.ToString());
         }
 
 
@@ -46,7 +46,10 @@ namespace SERO
         public static IEnumerable<RadEvent> Find(RadioAntena antena, double minSignal = 0.1)
         {
             var now = DateTime.Now;
-            return Instance.events.Where(thing => antena.Gain(thing.position) * Math.Pow(2, -(now - thing.timestamp).TotalSeconds / thing.halfLifeSeconds) >= minSignal);
+            Instance.events.RemoveAll(thing => (now - thing.timestamp).TotalSeconds >= 4*thing.halfLifeSeconds); // remove the uselss
+            //return Instance.events.Where(thing => antena.Gain(thing.position) * Math.Pow(2, -(now - thing.timestamp).TotalSeconds / thing.halfLifeSeconds) >= minSignal);
+
+            return Instance.events.Where(thing => (antena.Position-thing.position).Length()/thing.power <= antena.PickupRange);
         }
     }
 
@@ -70,7 +73,7 @@ namespace SERO
         }
         public override string ToString()
         {
-            return $"[{position} {name}]";
+            return $"[#gps:{name} {power}:{position}]";
         }
     }
 
@@ -81,9 +84,11 @@ namespace SERO
         const double DeepSapaceNetworkWaveLength = 0.12;
 
 
+        public Vector3D Position => block.WorldMatrix.Translation;
+        public double PickupRange => ((block.IsBroadcasting)? 10 : 1) * block.Radius;
         public double Gain(Vector3D target, double wavelength = DeepSapaceNetworkWaveLength)
         {
-            var pos = block.WorldMatrix.Translation;
+            var pos = Position;
             var angle = block.WorldMatrix.Up.Angle(target - pos);
             var diameterOfReflector = 7.5;
 
@@ -103,7 +108,7 @@ namespace SERO
             return efficiencyFactor * Math.Pow(Math.PI * diameterOfReflector / wavelength, 2);
         }
 
-
+    
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
             block = (IMyRadioAntenna)Entity;
@@ -113,7 +118,7 @@ namespace SERO
         public override void UpdateBeforeSimulation100()
         {
             base.UpdateBeforeSimulation100();
-            block.CustomData = string.Join("\n",RadManager.Find(this).Select(x => $"{x.position} {x.name}"));
+            block.CustomData = "Found\n"+string.Join("\n",RadManager.Find(this));
         }
 
     }
