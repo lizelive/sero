@@ -1,0 +1,3 @@
+[submodule "sero/Data/Scripts/SERO/SENetworkAPI"]
+	path = sero/Data/Scripts/SERO/SENetworkAPI
+	url = https://github.com/Gauge/SENetworkAPI
