@@ -1,6 +1,7 @@
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.ModAPI;
 using SpaceEngineers.Game.Entities.Blocks;
+using SpaceEngineers.Game.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
 using VRage.ModAPI;
@@ -13,7 +14,7 @@ namespace SERO
 
     class MedbaysRequireMaterials : MyGameLogicComponent
     {
-        MyMedicalRoom medicalRoom;
+        IMyMedicalRoom medicalRoom;
         private void ChangeComponents(MyDefinitionId defid)
         {
 
@@ -21,7 +22,7 @@ namespace SERO
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
-            medicalRoom = (MyMedicalRoom)Entity;
+            medicalRoom = (IMyMedicalRoom)Entity;
             MyLog.Default.WriteLine("mybraintastesbad");
             NeedsUpdate = MyEntityUpdateEnum.BEFORE_NEXT_FRAME | MyEntityUpdateEnum.EACH_100TH_FRAME | MyEntityUpdateEnum.EACH_FRAME;
         }
