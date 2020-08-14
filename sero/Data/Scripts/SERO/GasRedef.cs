@@ -33,11 +33,11 @@ namespace SERO
             def.Mass = def.Components.Sum(x => x.Count * x.Definition.Mass);
             def.MaxIntegrity = def.Components.Sum(x => x.Count * x.Definition.MaxIntegrity);
         }
-        public static void RescaleToHaveMass(MyCubeBlockDefinition def, double targetMass, bool force = false)
+        public static void RescaleToHaveMass(MyCubeBlockDefinition def, double targetMass, bool force = true)
         {
             Rescale(def, targetMass / def.Mass);
-            if(force)
-            def.Mass = (float)targetMass; // i did it mom
+            if (force)
+                def.Mass = (float)targetMass; // i did it mom
         }
         public override void LoadData()
         {
@@ -49,23 +49,22 @@ namespace SERO
                 var cubeSideLen = tankDef.CubeSize.GetSizeM();
                 var size = tankDef.Size * cubeSideLen;
                 var surfaceArea = 2 * (size.X * size.Y + size.X * size.Z + size.Y * size.Z); //m^2
-                var tankWeightKg = surfaceArea * 9;
+                var tankWeightKg = surfaceArea * (tankDef.CubeSize == MyCubeSize.Large ? 9 : 4); //not sure this har is realistic
                 tankDef.Capacity = tankDef.GetVolumeM3() * 1000;
                 RescaleToHaveMass(tankDef, tankWeightKg);
 
             }
 
 
-            foreach(var oreDetector in allDefs.OfType<MyOreDetectorDefinition>())
-            {
-                // ore detectors should be 10x longer
-                var diameter = oreDetector.GetDiameter();
-                oreDetector.MaximumRange = diameter * 100;
-                
-            }
+            // foreach(var oreDetector in allDefs.OfType<MyOreDetectorDefinition>())
+            // {
+            //     // ore detectors should be 10x longer
+            //     var diameter = oreDetector.GetDiameter();
+            //     oreDetector.MaximumRange = diameter * 100;                
+            // }
 
 
-            foreach(var wheelDef in allDefs.OfType<MyMotorSuspensionDefinition>())
+            foreach (var wheelDef in allDefs.OfType<MyMotorSuspensionDefinition>())
             {
                 // wheels in this game should be way more powerful
             }
@@ -77,7 +76,6 @@ namespace SERO
                 batDef.MaxPowerOutput = batDef.MaxStoredPower * 40; // batts have a lot of power 80 continous is fairly common
                 batDef.InitialStoredPowerRatio = 0.1f;
             }
-
             foreach (var thrusterDef in allDefs.OfType<MyThrustDefinition>())
             {
                 ThrusterData thruster = null;
@@ -94,7 +92,7 @@ namespace SERO
                 {
                     thruster = ThrusterData.DjiQuadcopter;
                     thrusterDef.MinPlanetaryInfluence = 0.1f; // this is the best thing.
-                }   
+                }
 
                 // normal thrusters start here
                 if (thrusterDef.ThrusterType == MyStringHash.GetOrCompute("Hydrogen"))
@@ -105,7 +103,7 @@ namespace SERO
                 var scale = Math.Pow(diameter / thruster.Diameter, 2);
                 var mass = scale * thruster.Mass;
                 RescaleToHaveMass(thrusterDef, mass, true);
-                
+
 
                 var force = scale * thruster.MaxThrust; // force in newtons
 

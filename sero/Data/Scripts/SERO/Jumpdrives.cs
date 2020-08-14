@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sandbox.Common.ObjectBuilders;
+using VRage.Game.Components;
 
 namespace SERO
 {
     /// <summary>
-    /// So when you jump insted of jumping it spawns a portal and you need to fly through it
+    /// It's an ancluba drive
     /// </summary>
+        [MyEntityComponentDescriptor(typeof(MyObjectBuilder_JumpDrive), false)]
     class Jumpdrives
     {
     }
