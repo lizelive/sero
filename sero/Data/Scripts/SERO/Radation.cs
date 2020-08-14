@@ -24,18 +24,34 @@ using static System.Math;
 
 namespace SERO
 {
-
-    class RadManager
+    [MySessionComponentDescriptor(MyUpdateOrder.AfterSimulation)]
+    class RadManager :MySessionComponentBase
     {
 
-        static readonly RadManager Instance = new RadManager();
+        static RadManager Instance;
         List<RadEvent> events = new List<RadEvent>();
+        public override void LoadData()
+        {
+            Instance = this;
+        }
 
         public static void Oops(RadEvent thing)
         {
             //MyAPIGateway.Utilities.ShowMessage("got", $"{thing.ToString()}");
 
             Instance.events.Add(thing);
+        }
+        
+        protected override void UnloadData()
+        {
+            // executed when world is exited to unregister events and stuff
+
+            Instance = null; // important for avoiding this object to remain allocated in memory
+        }
+        public override void UpdateAfterSimulation()
+        {
+            var now = DateTime.Now;
+            Instance.events.RemoveAll(thing => (now - thing.timestamp).TotalSeconds >= thing.lifetime); // remove the uselss
         }
 
         public struct RadDetected
@@ -60,8 +76,6 @@ namespace SERO
         /// <returns></returns>
         public static IEnumerable<RadDetected> Find(RadioAntena antena, double minSignal = 1)
         {
-            var now = DateTime.Now;
-            Instance.events.RemoveAll(thing => (now - thing.timestamp).TotalSeconds >= thing.lifetime); // remove the uselss
             var all = Instance.events.Select(thing => new RadDetected(thing.wavelength, antena.Gain(thing.position, thing.wavelength) * thing.power));
             return all.Where(x => x.strenght >= minSignal);
         }
@@ -73,7 +87,7 @@ namespace SERO
         public Vector3D position;
         public DateTime timestamp;
         public float wavelength;
-        public float lifetime = 1;
+        public float lifetime = 2;
         /// <summary>
         /// how much raditation was detected im watts
         /// </summary>
