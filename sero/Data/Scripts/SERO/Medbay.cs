@@ -1,4 +1,5 @@
 using Sandbox.Common.ObjectBuilders;
+using Sandbox.Game.EntityComponents;
 using Sandbox.ModAPI;
 using SpaceEngineers.Game.Entities.Blocks;
 using SpaceEngineers.Game.ModAPI;
@@ -10,14 +11,18 @@ using VRage.Utils;
 
 namespace SERO
 {
-    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_OxygenTank), false)]
+
+    // so medbay are not whitelisted
+    // https://github.com/KeenSoftwareHouse/SpaceEngineers/blob/a109106fc0ded66bdd5da70e099646203c56550f/Sources/SpaceEngineers.Game/Entities/Blocks/MyMedicalRoom.cs
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_MedicalRoom), false)]
 
     class MedbaysRequireMaterials : MyGameLogicComponent
     {
         IMyMedicalRoom medicalRoom;
+        
         private void ChangeComponents(MyDefinitionId defid)
         {
-
+            
         }
 
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)

@@ -25,7 +25,7 @@ namespace SERO
     class HydrogenTanksHaveMass : MyGameLogicComponent
     {
         IMyGasTank block;
-
+        
         float gasKgPerL = 1f;
         float volumeM3 = 0;
         AddedMassInventory addedMass;
