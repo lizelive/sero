@@ -8,6 +8,9 @@ using VRage.Game.Components;
 
 namespace SERO
 {
+
+    //https://en.wikipedia.org/wiki/Alcubierre_drive
+    
     /// <summary>
     /// It's an ancluba drive
     /// </summary>

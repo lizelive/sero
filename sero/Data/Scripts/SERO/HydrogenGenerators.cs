@@ -52,7 +52,7 @@ namespace SERO
             sinkInfo = new MyResourceSinkInfo()
             {
                 ResourceTypeId = oxygenDef,
-                MaxRequiredInput = maxHydrogenRequired,
+                MaxRequiredInput = maxOxygenRequired,
                 RequiredInputFunc = GetOxygenRequired
             };
 
@@ -60,7 +60,6 @@ namespace SERO
 
             sink.AddType(ref sinkInfo);
            
-            Entity.Components.Add(sink);
             sink.Update();
         }
 

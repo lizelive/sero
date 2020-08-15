@@ -1,5 +1,6 @@
 //copied from https://raw.githubusercontent.com/THDigi/BuildInfo/master/Data/Scripts/BuildInfo/VanillaData/HardCoded.cs
-//TODO PERMISION PENDING
+//got permision from Digi to use
+
 using System;
 using Sandbox.Definitions;
 using Sandbox.Game;

@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VRage.Game;
 using VRage.Game.Components;
+using VRage.Game.Definitions.SessionComponents;
 using VRage.Utils;
 using VRageMath;
 using VRageRender.Messages;
@@ -62,6 +63,11 @@ namespace SERO
             //     var diameter = oreDetector.GetDiameter();
             //     oreDetector.MaximumRange = diameter * 100;                
             // }
+
+            // no you can't have a cookie.
+            foreach(var medbay in allDefs.OfType<MyMedicalRoomDefinition>()){
+                medbay.RespawnAllowed = false;
+            }
 
 
             foreach (var wheelDef in allDefs.OfType<MyMotorSuspensionDefinition>())
