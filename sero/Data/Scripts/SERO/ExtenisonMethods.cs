@@ -52,6 +52,8 @@ namespace SERO
             var x = size.GetSizeM();
             return x * x * x;
         }
+
+
         public static float GetSizeM(this MyCubeSize size)
         {
             switch (size)
@@ -66,13 +68,8 @@ namespace SERO
         }
 
 
-        // public static float GetCurrentPowerConsuptionMegaWatts(this IMyEntity thing){
-        //     var terminalGrid = thing as IMyTerminalBlock;
-        //     if(terminalGrid == null)
-        //         return 0;
-
-        //     // must not consume power.
-        //     return 0;
-        // }
+        public static float GetCurrentPowerConsuptionMegaWatts(this IMyEntity Entity){
+            return Entity.Components.Get<Sandbox.Game.EntityComponents.MyResourceSinkComponent>()?.RequiredInputByType(Sandbox.Game.EntityComponents.MyResourceDistributorComponent.ElectricityId) ?? 0;
+        }
     }
 }
