@@ -53,7 +53,6 @@ namespace SERO
             // MyVisualScriptLogicProvider.PlayerConnected += PlayerConnected;
         }
 
-
         private MedbaysRequireMaterials Nearest(IMyPlayer player)
         {
             Vector3D position = player.GetPosition();
@@ -92,8 +91,10 @@ namespace SERO
             // kill the player
             if (neart != null)
             {
-                var Killdata
-                player.Character.Kill();
+                if (!neart.DidSpawn(player))
+                {
+                    player.Character.Kill();
+                }
             }
         }
 
@@ -211,8 +212,8 @@ namespace SERO
         MyResourceSinkComponent sink;
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
-            //((IMyCubeBlock)Entity).CubeGrid?.Physics == null ||
-            if (!MyAPIGateway.Multiplayer.IsServer)
+            //
+            if (((IMyCubeBlock)Entity).CubeGrid?.Physics == null || !MyAPIGateway.Multiplayer.IsServer)
                 return;
 
             medicalRoom = (IMyMedicalRoom)Entity;
@@ -232,13 +233,21 @@ namespace SERO
                 RequiredInputFunc = GetFleshRequired
             };
 
+
+        }
+
+
+        public override void UpdateOnceBeforeFrame()
+        {
+            _respawnAllowed = medicalRoom.Components.Get<MyEntityRespawnComponentBase>() != null;
+
+
             var sb = new StringBuilder();
 
-            // foreach (var x in medicalRoom.Components)
-            // {
-            //     sb.AppendLine(x.GetType().FullName);
-            //     MyObjectBuilder_Medical
-            // }
+            foreach (var x in medicalRoom.Components)
+            {
+                sb.AppendLine(x.GetType().FullName);
+            }
 
             medicalRoom.CustomData = sb.ToString();
 
@@ -246,30 +255,38 @@ namespace SERO
             sink.Update();
             MedbaySystem.Instance.Register(this);
         }
-
         public bool CanAllowRespawn => true;
 
+        private MyEntityRespawnComponentBase myNotUsedRespawn;
+
+
+        private bool _respawnAllowed = true;
         public bool RespawnAllowed
         {
             set
             {
-                if (!CanAllowRespawn)
+                if (!CanAllowRespawn || _respawnAllowed == value)
                     return;
+
+                var myMedicalComponentInUse = medicalRoom.Components.Get<MyEntityRespawnComponentBase>();
                 if (value)
                 {
-                    if (medicalRoom.Components.Get<MyEntityRespawnComponentBase>() == null)
-                        medicalRoom.Components.Add<MyRespawnComponent>(new MyRespawnComponent());
+                    if (myMedicalComponentInUse == null)
+                    {
+                        medicalRoom.Components.Add<MyEntityRespawnComponentBase>(myNotUsedRespawn ?? SERO.Spawn.MakeNewRespawn());
+                        myNotUsedRespawn = null;
+                    }
                 }
                 else
                 {
+                    myNotUsedRespawn = myMedicalComponentInUse;
                     medicalRoom.Components.Remove<MyEntityRespawnComponentBase>();
                 }
+                _respawnAllowed = value;
             }
             get
             {
-                if (!CanAllowRespawn)
-                    return false;
-                return medicalRoom.Components.Get<MyEntityRespawnComponentBase>() != null;
+                return _respawnAllowed;
             }
         }
         private void AppendingCustomInfo(IMyTerminalBlock arg1, StringBuilder arg2)
@@ -284,9 +301,12 @@ namespace SERO
 
         float GetFleshRequired()
         {
-            return storedFlesh < MaxStoredFlesh ? MaxFillRate : 0;
+            var fleshLeftToFill = MaxStoredFlesh - storedFlesh;
+            var fillRate = Math.Min(MaxFillRate, fleshLeftToFill / SecsPerUpdate);
+            return fillRate;
         }
 
+        const float SecsPerUpdate = 100 / MyEngineConstants.UPDATE_STEPS_PER_SECOND;
 
         const float RequiredFleshPerClone = 100;
         const float MaxStoredFlesh = 200;
@@ -295,10 +315,19 @@ namespace SERO
         public override void UpdateAfterSimulation100()
         {
             var current = sink.SuppliedRatioByType(Gasses.Flesh);
-            storedFlesh += sink.RequiredInputByType(Gasses.Flesh) * current * 100 / 60;
+            storedFlesh += sink.RequiredInputByType(Gasses.Flesh) * current * SecsPerUpdate;
+            RespawnAllowed = CanSpawnPlayer();
+
             medicalRoom.RefreshCustomInfo();
             sink.Update();
         }
 
+        internal bool DidSpawn(IMyPlayer player)
+        {
+            if (!CanSpawnPlayer(player))
+                return false;
+            storedFlesh -= RequiredFleshPerClone;
+            return true;
+        }
     }
 }

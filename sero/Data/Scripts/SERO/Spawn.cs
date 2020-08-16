@@ -11,12 +11,15 @@ using Sandbox.Game.EntityComponents;
 using VRage.Game.GUI.TextPanel;
 using VRage.Game.ModAPI;
 
-namespace SERO{
+namespace SERO
+{
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using Sandbox.Common.ObjectBuilders;
     using Sandbox.ModAPI;
+    using SpaceEngineers.Game.ModAPI;
     using VRage;
     using VRage.Game;
     using VRage.Game.Entity;
@@ -144,7 +147,7 @@ namespace SERO{
                 {
                     PrefabTextPanel.SubtypeName = name;
                     PrefabTextPanel.FontColor = new Vector4(1, 1, 1, 1);
-                    PrefabTextPanel.BackgroundColor = new Vector4(0,0,0, 0);
+                    PrefabTextPanel.BackgroundColor = new Vector4(0, 0, 0, 0);
                     PrefabTextPanel.FontSize = DISPLAY_FONT_SIZE;
                     PrefabBuilder.CubeBlocks.Add(PrefabTextPanel);
                     var def = MyDefinitionManager.Static.GetCubeBlockDefinition(new MyDefinitionId(typeof(MyObjectBuilder_TextPanel), name)) as MyTextPanelDefinition;
@@ -223,6 +226,63 @@ namespace SERO{
             catch (Exception ex) { Log.Line($"Exception in SpawnPrefab: {ex}"); }
 
             camera = null;
+            return null;
+        }
+
+        static readonly MyObjectBuilder_MedicalRoom PrefabMedicalRoom = new MyObjectBuilder_MedicalRoom()
+        {
+            SubtypeName = "LargeMedicalRoom",
+            EntityId = 1,
+            Min = PrefabVectorI0,
+            BlockOrientation = PrefabOrientation,
+            ShareMode = MyOwnershipShareModeEnum.None,
+            DeformationRatio = 0,
+            ShowOnHUD = false,
+            //IsActive = true,
+            Name = null,
+            CustomName = null,
+        };
+
+
+        public static MyEntityRespawnComponentBase MakeNewRespawn()
+        {
+            return CreateNewComponent<MyEntityRespawnComponentBase>(PrefabMedicalRoom);
+        }
+
+        internal static T CreateNewComponent<T>(MyObjectBuilder_FunctionalBlock prefab) where T : VRage.Game.Components.MyComponentBase
+        {
+            try
+            {
+                PrefabBuilder.CubeBlocks.Clear(); // need no leftovers from previous spawns
+                PrefabBuilder.CubeBlocks.Add(prefab);
+                MyEntities.RemapObjectBuilder(PrefabBuilder);
+                var ent = MyEntities.CreateFromObjectBuilder(PrefabBuilder, false);
+                Log.Line("259");
+                ent.Render.CastShadows = false;
+                ent.Render.Visible = false;
+                ent.IsPreview = true;
+                ent.Save = false;
+                ent.SyncFlag = false;
+                ent.NeedsWorldMatrix = false;
+                ent.Flags |= EntityFlags.IsNotGamePrunningStructureObject;
+                ent.Render.RemoveRenderObjects();
+                MyEntities.Add(ent, false);
+                Log.Line("269");
+                var grid = (IMyCubeGrid)ent;
+                var blocks = new List<IMySlimBlock>();
+                grid.GetBlocks(blocks);
+                var blockSlim = blocks.FirstOrDefault();
+                Log.Line("271");
+                var blockFat = blockSlim.FatBlock;
+                Log.Line("273");
+                Log.Line("275");
+                var component = blockFat.Components.Get<T>();
+                blockFat.Components.Remove<T>();
+                ent.Delete();
+                return component;
+            }
+            catch (Exception ex) { Log.Error(ex); }
+
             return null;
         }
 
