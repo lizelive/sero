@@ -20,6 +20,7 @@ using VRageMath;
 using VRage.Game.ModAPI;
 using System;
 using System.Text;
+using VRage.Game.Entity;
 
 /*
 Copyright 2020 the Cult of Clang.
@@ -27,89 +28,6 @@ Do not distrubute.
 */
 namespace SERO
 {
-    [Serializable]
-    public class MedbayStorage
-    {
-        public List<MedbayRegistration> registrations;
-    }
-
-    [Serializable]
-    public class MedbayRegistration
-    {
-        public MedbayRegistration()
-        {
-
-        }
-
-        long entityId;
-        Vector3D lastKnowPosition;
-        long grid;
-        bool isReady;
-        List<long> allowed_players; //both factions and players that are allowed t ospawn here
-        List<long> allowed_factions;
-
-
-        public void UpdateData(MedbaysRequireMaterials from)
-        {
-            var mr = from.MedicalRoom;
-            if (entityId != mr.EntityId)
-                throw new Exception("omg the world is ending");
-            isReady = from.CanSpawnPlayer();
-            allowed_players = new List<long>(new[] { mr.OwnerId });
-            grid = mr.CubeGrid.EntityId;
-            lastKnowPosition = from.SpawnPos.Translation;
-            allowed_factions = new List<long>();
-            // var factionTag = MyVisualScriptLogicProvider.GetPlayersFactionTag(mr.OwnerId);
-            // var faction = MyAPIGateway.Session.Factions.TryGetFactionByTag(factionTag);
-
-            // if(faction != null && from){
-            //     allowed_factions.Add(faction.FactionId);
-            // }
-        }
-
-        public MedbayRegistration(MedbaysRequireMaterials from)
-        {
-            UpdateData(from);
-        }
-
-
-
-        internal bool CanSpawnPlayer(IMyPlayer player)
-        {
-            return allowed_players.Contains(player.Identity.IdentityId);
-        }
-
-        internal void Spawn(IMyPlayer player)
-        {
-            //var grid = null;
-
-        }
-
-        public override bool Equals(object obj)
-        {
-            var registration = obj as MedbayRegistration;
-            return registration != null &&
-                   entityId == registration.entityId;
-        }
-
-        public override int GetHashCode()
-        {
-            return entityId.GetHashCode();
-            // int hashCode = -1528460639;
-            // hashCode = hashCode * -1521134295 + id.GetHashCode();
-            // hashCode = hashCode * -1521134295 + lastKnowPosition.GetHashCode();
-            // hashCode = hashCode * -1521134295 + grid.GetHashCode();
-            // hashCode = hashCode * -1521134295 + isReady.GetHashCode();
-            // hashCode = hashCode * -1521134295 + EqualityComparer<List<long>>.Default.GetHashCode(allowed);
-            // return hashCode;
-        }
-
-        internal bool Is(MedbaysRequireMaterials bay)
-        {
-            return bay.MedicalRoom.EntityId == entityId;
-        }
-    }
-
     // https://github.com/THDigi/SE-ModScript-Examples/blob/master/Data/Scripts/Examples/BasicExample_GameLogicAndSession/Session.cs
     // useful ref code https://github.com/LordTylus/SE-Mod-Spawn-without-tools-and-hydrogen-at-specific-medbays/blob/d4b2544a626c6676483cfbb2f37e3ae651286b84/Main.cs
     // https://github.com/Rochendil/SE/blob/f26850d9b3a13c824581332f58e623e9dfb93dc5/Sources/Sandbox.Game/Game/World/MyPlayer.cs
@@ -117,7 +35,7 @@ namespace SERO
     [MySessionComponentDescriptor(MyUpdateOrder.NoUpdate)]
     public class MedbaySystem : MySessionComponentBase
     {
-        MedbayStorage storage = new MedbayStorage();
+        List<MedbaysRequireMaterials> storage = new List<MedbaysRequireMaterials>();
         public static MedbaySystem Instance;
 
         public override void Init(MyObjectBuilder_SessionComponent sessionComponent)
@@ -125,27 +43,63 @@ namespace SERO
             base.Init(sessionComponent);
             if (!MyAPIGateway.Multiplayer.IsServer)
                 return;
-            MyVisualScriptLogicProvider.PlayerRespawnRequest += RepawnPlease;
-            MyVisualScriptLogicProvider.PlayerDied += PlayerDied;
-            MyVisualScriptLogicProvider.PlayerConnected += PlayerConnected;
+
+
+            // this happens when the player is going to respawn.
+            // i wonder if i can cancel it
+            //MyVisualScriptLogicProvider.PlayerRespawnRequest += PlayerDied;
+            MyVisualScriptLogicProvider.PlayerSpawned += PlayerSpawned;
+            // MyVisualScriptLogicProvider.PlayerDied += PlayerDied;
+            // MyVisualScriptLogicProvider.PlayerConnected += PlayerConnected;
         }
 
 
-        public MedbayRegistration Register(MedbaysRequireMaterials bay)
+        private MedbaysRequireMaterials Nearest(IMyPlayer player)
         {
-            var reg = storage.registrations.FirstOrDefault(x => x.Is(bay));
+            Vector3D position = player.GetPosition();
 
-            if (reg != null)
-            {
-                reg.UpdateData(bay);
+            BoundingSphereD sphere = new BoundingSphereD(position, 3.0);
 
-            }
-            else
+            List<MyEntity> entities = MyEntities.GetEntitiesInSphere(ref sphere);
+
+            double minDist = int.MaxValue;
+            MedbaysRequireMaterials nearest = null;
+
+            foreach (MyEntity entity in entities)
             {
-                reg = new MedbayRegistration(bay);
+                var medicalRoom = entity.Components.Get<MedbaysRequireMaterials>();
+
+                if (medicalRoom == null)
+                    continue;
+
+                var dist = Vector3D.DistanceSquared(medicalRoom.SpawnPos.Translation, position);
+
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    nearest = medicalRoom;
+                }
             }
-            storage.registrations.Add(reg); // need to verify
-            return reg;
+            return nearest;
+        }
+
+        private void PlayerSpawned(long playerId)
+        {
+            var player = GetPlayer(playerId);
+            var neart = Nearest(player);
+
+            MyVisualScriptLogicProvider.SetPlayersHydrogenLevel(player.Identity.IdentityId, 0);
+            // kill the player
+            if (neart != null)
+            {
+                var Killdata
+                player.Character.Kill();
+            }
+        }
+
+        public void Register(MedbaysRequireMaterials bay)
+        {
+            storage.Add(bay); // need to verify
         }
         private void PlayerConnected(long playerId)
         {
@@ -156,14 +110,19 @@ namespace SERO
                 PlayerDied(playerId);
         }
 
+
+
         public override void LoadData()
         {
+
             base.LoadData();
+            if (!MyAPIGateway.Multiplayer.IsServer)
+                return;
             Instance = this;
-            var allDefs = MyDefinitionManager.Static.GetAllDefinitions().ToArray();
+            var allDefs = MyDefinitionManager.Static.GetAllDefinitions();
             foreach (var medbay in allDefs.OfType<MyMedicalRoomDefinition>())
             {
-                medbay.RespawnAllowed = false;
+                medbay.RespawnAllowed = true;
             }
         }
 
@@ -181,7 +140,7 @@ namespace SERO
                 return;
 
 
-            var possibleMedbays = storage.registrations.Where(x => x.CanSpawnPlayer(player)).ToList();
+            var possibleMedbays = storage.Where(x => x.CanSpawnPlayer(player)).ToList();
 
             if (possibleMedbays.Any())
             {
@@ -194,19 +153,22 @@ namespace SERO
         {
             base.UnloadData();
 
-            var data = MyAPIGateway.Utilities.SerializeToXML(storage);
-            using (var cfg = MyAPIGateway.Utilities.WriteFileInWorldStorage("medbay.xml", typeof(MedbayStorage)))
-            {
-                cfg.Write(data);
-                cfg.Flush();
-            }
-
-
+            // var data = MyAPIGateway.Utilities.SerializeToXML(storage);
+            // using (var cfg = MyAPIGateway.Utilities.WriteFileInWorldStorage("medbay.xml", typeof(MedbayStorage)))
+            // {
+            //     cfg.Write(data);
+            //     cfg.Flush();
+            // }
 
             Instance = null;
             MyVisualScriptLogicProvider.PlayerDied -= PlayerDied;
             MyVisualScriptLogicProvider.PlayerConnected -= PlayerConnected;
 
+        }
+
+        internal void DeRegister(MedbaysRequireMaterials medbaysRequireMaterials)
+        {
+            storage.Remove(medbaysRequireMaterials);
         }
     }
 
@@ -230,6 +192,12 @@ namespace SERO
         public Vector3 Velocity => medicalRoom.Physics?.LinearVelocity ?? Vector3D.Zero;
         IMyMedicalRoom medicalRoom;
         MyResourceSinkInfo fleshSink; //yummy flesh leather uwu
+
+
+        public override void OnRemovedFromScene()
+        {
+            MedbaySystem.Instance.DeRegister(this);
+        }
 
         public bool CanSpawnPlayer(IMyPlayer player = null)
         {
@@ -263,16 +231,47 @@ namespace SERO
                 MaxRequiredInput = MaxFillRate,
                 RequiredInputFunc = GetFleshRequired
             };
+
+            var sb = new StringBuilder();
+
+            // foreach (var x in medicalRoom.Components)
+            // {
+            //     sb.AppendLine(x.GetType().FullName);
+            //     MyObjectBuilder_Medical
+            // }
+
+            medicalRoom.CustomData = sb.ToString();
+
             sink.AddType(ref fleshSink);
             sink.Update();
             MedbaySystem.Instance.Register(this);
-
-
-
-
         }
-        private MedbayRegistration registration;
 
+        public bool CanAllowRespawn => true;
+
+        public bool RespawnAllowed
+        {
+            set
+            {
+                if (!CanAllowRespawn)
+                    return;
+                if (value)
+                {
+                    if (medicalRoom.Components.Get<MyEntityRespawnComponentBase>() == null)
+                        medicalRoom.Components.Add<MyRespawnComponent>(new MyRespawnComponent());
+                }
+                else
+                {
+                    medicalRoom.Components.Remove<MyEntityRespawnComponentBase>();
+                }
+            }
+            get
+            {
+                if (!CanAllowRespawn)
+                    return false;
+                return medicalRoom.Components.Get<MyEntityRespawnComponentBase>() != null;
+            }
+        }
         private void AppendingCustomInfo(IMyTerminalBlock arg1, StringBuilder arg2)
         {
             arg2.AppendLine($"Blood Tank {storedFlesh} / {RequiredFleshPerClone}");
@@ -280,7 +279,7 @@ namespace SERO
 
         private void UpdateData(IMyCubeBlock obj)
         {
-            registration.UpdateData(this);
+            //registration.UpdateData(this);
         }
 
         float GetFleshRequired()
@@ -297,6 +296,7 @@ namespace SERO
         {
             var current = sink.SuppliedRatioByType(Gasses.Flesh);
             storedFlesh += sink.RequiredInputByType(Gasses.Flesh) * current * 100 / 60;
+            medicalRoom.RefreshCustomInfo();
             sink.Update();
         }
 
