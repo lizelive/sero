@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GasProperties>
+    <!-- MWh/litres liquid -->
+    <!-- Using wikipedia https://en.wikipedia.org/wiki/Energy_density -->
+    <!--
+      This is human juice.
+      Humans have 7,450 calories/62 liters
+      So that is 
+      -->
+    <Gas>
+      <Id>
+        <TypeId>MyObjectBuilder_GasProperties</TypeId>
+        <SubtypeId>Biomater</SubtypeId>
+      </Id>
+      <EnergyDensity>1.397e-7</EnergyDensity>
+    </Gas>
+    <Gas>
+      <Id>
+        <TypeId>MyObjectBuilder_GasProperties</TypeId>
+        <SubtypeId>Water</SubtypeId>
+      </Id>
+      <EnergyDensity>0</EnergyDensity>
+    </Gas>
+    <Gas>
+      <Id>
+        <TypeId>MyObjectBuilder_GasProperties</TypeId>
+        <SubtypeId>N2</SubtypeId>
+      </Id>
+      <EnergyDensity>0</EnergyDensity>
+    </Gas>
+    <Gas>
+      <Id>
+        <TypeId>MyObjectBuilder_GasProperties</TypeId>
+        <SubtypeId>H2</SubtypeId>
+      </Id>
+      <EnergyDensity>0</EnergyDensity>
+    </Gas>
+    <Gas>
+      <Id>
+        <TypeId>MyObjectBuilder_GasProperties</TypeId>
+        <SubtypeId>HCl</SubtypeId>
+      </Id>
+      <EnergyDensity>0</EnergyDensity>
+    </Gas>
+  </GasProperties>
+</Definitions>

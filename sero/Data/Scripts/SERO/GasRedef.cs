@@ -75,6 +75,10 @@ namespace SERO
                 // wheels in this game should be way more powerful
             }
 
+            foreach(var componenet in allDefs.OfType<MyPhysicalItemDefinition>()){
+                componenet.MinimalPricePerUnit = 0;
+            }
+
             foreach (var batDef in allDefs.OfType<MyBatteryBlockDefinition>())
             {
                 // todo use the number of battery componenets to figure out

@@ -1,5 +1,7 @@
-//copied from https://raw.githubusercontent.com/THDigi/BuildInfo/master/Data/Scripts/BuildInfo/VanillaData/HardCoded.cs
-//got permision from Digi to use
+// <copyright file="Gasses.cs" company="Cult of Clang">
+// Copyright (c) 2020 All Rights Reserved
+// </copyright>
+// <author>Lize Live</author>
 
 using Sandbox.Common.ObjectBuilders;
 using Sandbox.Game.EntityComponents;
@@ -22,10 +24,6 @@ using System;
 using System.Text;
 using VRage.Game.Entity;
 
-/*
-Copyright 2020 the Cult of Clang.
-Do not distrubute.
-*/
 namespace SERO
 {
     // https://github.com/THDigi/SE-ModScript-Examples/blob/master/Data/Scripts/Examples/BasicExample_GameLogicAndSession/Session.cs
@@ -43,7 +41,6 @@ namespace SERO
             base.Init(sessionComponent);
             if (!MyAPIGateway.Multiplayer.IsServer)
                 return;
-
 
             // this happens when the player is going to respawn.
             // i wonder if i can cancel it
@@ -209,29 +206,33 @@ namespace SERO
             return medicalRoom.IsWorking && storedFlesh >= RequiredFleshPerClone;
         }
 
+        private static bool IsReal(MyCubeBlock block)
+        {
+            
+            if (block.CubeGrid.IsPreview)
+                return false;
+            if (block.CubeGrid.Physics == null && !block.CubeGrid.MarkedForClose && block.BlockDefinition.HasPhysics)
+                return false;
+            return true;
+
+        }
+
         MyResourceSinkComponent sink;
         public override void Init(MyObjectBuilder_EntityBase objectBuilder)
         {
             //
-            if (((IMyCubeBlock)Entity).CubeGrid?.Physics == null || !MyAPIGateway.Multiplayer.IsServer)
+            if (!MyAPIGateway.Multiplayer.IsServer)
                 return;
 
             medicalRoom = (IMyMedicalRoom)Entity;
 
-            NeedsUpdate = MyEntityUpdateEnum.BEFORE_NEXT_FRAME | MyEntityUpdateEnum.EACH_100TH_FRAME;
-            medicalRoom.OwnershipChanged += UpdateData;
-            medicalRoom.PropertiesChanged += UpdateData;
-            medicalRoom.IsWorkingChanged += UpdateData;
+            NeedsUpdate = MyEntityUpdateEnum.BEFORE_NEXT_FRAME;
+            // medicalRoom.OwnershipChanged += UpdateData;
+            // medicalRoom.PropertiesChanged += UpdateData;
+            // medicalRoom.IsWorkingChanged += UpdateData;
             medicalRoom.AppendingCustomInfo += AppendingCustomInfo;
 
-            sink = Entity.Components.Get<MyResourceSinkComponent>();
 
-            fleshSink = new MyResourceSinkInfo()
-            {
-                ResourceTypeId = Gasses.Flesh, // people are flesh
-                MaxRequiredInput = MaxFillRate,
-                RequiredInputFunc = GetFleshRequired
-            };
 
 
         }
@@ -239,7 +240,16 @@ namespace SERO
 
         public override void UpdateOnceBeforeFrame()
         {
-            _respawnAllowed = medicalRoom.Components.Get<MyEntityRespawnComponentBase>() != null;
+
+
+            if (!IsReal((MyCubeBlock) medicalRoom)) // ignore projected and other non-physical grids
+                return;
+
+            NeedsUpdate |= MyEntityUpdateEnum.EACH_100TH_FRAME;
+
+
+            myNotUsedRespawn = medicalRoom.Components.Get<MyEntityRespawnComponentBase>();
+            _respawnAllowed = myNotUsedRespawn != null;
 
 
             var sb = new StringBuilder();
@@ -250,6 +260,16 @@ namespace SERO
             }
 
             medicalRoom.CustomData = sb.ToString();
+
+            // setup resources
+            sink = Entity.Components.Get<MyResourceSinkComponent>();
+
+            fleshSink = new MyResourceSinkInfo()
+            {
+                ResourceTypeId = Gasses.Flesh, // people are flesh
+                MaxRequiredInput = MaxFillRate,
+                RequiredInputFunc = GetFleshRequired
+            };
 
             sink.AddType(ref fleshSink);
             sink.Update();
@@ -274,12 +294,12 @@ namespace SERO
                     if (myMedicalComponentInUse == null)
                     {
                         medicalRoom.Components.Add<MyEntityRespawnComponentBase>(myNotUsedRespawn ?? SERO.Spawn.MakeNewRespawn());
-                        myNotUsedRespawn = null;
                     }
                 }
                 else
                 {
-                    myNotUsedRespawn = myMedicalComponentInUse;
+                    // facepalm
+                    //myNotUsedRespawn = myNotUsedRespawn ?? myMedicalComponentInUse;
                     medicalRoom.Components.Remove<MyEntityRespawnComponentBase>();
                 }
                 _respawnAllowed = value;
@@ -289,15 +309,16 @@ namespace SERO
                 return _respawnAllowed;
             }
         }
+
         private void AppendingCustomInfo(IMyTerminalBlock arg1, StringBuilder arg2)
         {
             arg2.AppendLine($"Blood Tank {storedFlesh} / {RequiredFleshPerClone}");
         }
 
-        private void UpdateData(IMyCubeBlock obj)
-        {
-            //registration.UpdateData(this);
-        }
+        // private void UpdateData(IMyCubeBlock obj)
+        // {
+        //     registration.UpdateData(this);
+        // }
 
         float GetFleshRequired()
         {
@@ -314,16 +335,19 @@ namespace SERO
         public float storedFlesh = 0;
         public override void UpdateAfterSimulation100()
         {
+
             var current = sink.SuppliedRatioByType(Gasses.Flesh);
             storedFlesh += sink.RequiredInputByType(Gasses.Flesh) * current * SecsPerUpdate;
-            RespawnAllowed = CanSpawnPlayer();
-
             medicalRoom.RefreshCustomInfo();
             sink.Update();
+            Log.Line("Will try to update");
+            RespawnAllowed = CanSpawnPlayer();
         }
 
         internal bool DidSpawn(IMyPlayer player)
         {
+            Log.Line("omg player spawned!");
+
             if (!CanSpawnPlayer(player))
                 return false;
             storedFlesh -= RequiredFleshPerClone;
