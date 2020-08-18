@@ -2,5 +2,5 @@
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
-  <Import Project="../../../paths.props" />
+  <Import Project="../paths.props" />
 </Project>

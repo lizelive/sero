@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SERO", "sero\Data\Scripts\SERO.csproj", "{D410307D-88C4-4765-B4EA-CCC95843D99E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sero", "sero\sero.csproj", "{23AFE52E-D758-439B-B6AD-D0E623B6CF4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "medbay", "medbay\medbay.csproj", "{2E968857-D7A3-4B66-B28C-78AEEB96C010}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D410307D-88C4-4765-B4EA-CCC95843D99E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D410307D-88C4-4765-B4EA-CCC95843D99E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D410307D-88C4-4765-B4EA-CCC95843D99E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D410307D-88C4-4765-B4EA-CCC95843D99E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23AFE52E-D758-439B-B6AD-D0E623B6CF4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23AFE52E-D758-439B-B6AD-D0E623B6CF4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23AFE52E-D758-439B-B6AD-D0E623B6CF4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23AFE52E-D758-439B-B6AD-D0E623B6CF4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E968857-D7A3-4B66-B28C-78AEEB96C010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E968857-D7A3-4B66-B28C-78AEEB96C010}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E968857-D7A3-4B66-B28C-78AEEB96C010}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E968857-D7A3-4B66-B28C-78AEEB96C010}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
