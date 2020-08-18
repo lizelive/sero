@@ -9,6 +9,9 @@ DarkStar
 AccidentallyTheCable
 Klime
 PSYCHO
+Malware
+Equinox
+FurtherV - Alex
 
 And the amazing discord.
 
