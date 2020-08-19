@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
 <Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<CubeBlocks>
-		<Definition>
+		<Definition xsi:type="MyObjectBuilder_ConveyorSorterDefinition">
 			<Id>
-				<TypeId>CubeBlock</TypeId>
+				<TypeId>ConveyorSorter</TypeId>
 				<SubtypeId>Bioreactor</SubtypeId>
 			</Id>
 			<DisplayName>Bioreactor</DisplayName>
-			<Description>Feed it to make + store biomatter. Do not unplug.</Description>
+			<Description>Converts energy + hydrogen into fun</Description>
 			<Icon>Textures\GUI\Icons\Cubes\Bioreactor.png</Icon>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
@@ -22,6 +22,20 @@
 				<MountPoint Side="Bottom" StartX="0.0" StartY="0.0" EndX="1.0" EndY="1.0"/>
 			</MountPoints>
 			<BlockPairName>Bioreactor</BlockPairName>
+      <DamageEffectName>Blood_Spider</DamageEffectName>
+      <DamagedSound>ParticleHeavyMech</DamagedSound>
+      <ResourceSinkGroup>Conveyors</ResourceSinkGroup>
+      <PowerInput>0.00025</PowerInput>
+      <InventorySize>
+        <X>1</X>
+        <Y>1</Y>
+        <Z>1</Z>
+      </InventorySize>
+      <EmissiveColorPreset>Default</EmissiveColorPreset>
+      <DestroyEffect>BlockDestroyedExplosion_Large</DestroyEffect>
+      <DestroySound>WepSmallWarheadExpl</DestroySound>
+      <PCU>25</PCU>
+      <IsAirTight>true</IsAirTight>
 		</Definition>
 	</CubeBlocks>
 </Definitions>

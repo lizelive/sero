@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<MaterialsLib Name="Default Materials">
+	<Material Name="Biomater">
+		<Parameter Name="Technique">GLASS</Parameter>
+		<Parameter Name="ColorMetalTexture">Textures\Models\Environment\Trees\AlienLeafTreeBranches_cm.dds</Parameter>
+		<Parameter Name="NormalGlossTexture">Textures\Models\Cubes\BlueFrostedMetal_ng.dds</Parameter>
+	</Material>
+</MaterialsLib>

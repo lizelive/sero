@@ -1,14 +1,14 @@
 <?xml version="1.0" ?>
 <Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<CubeBlocks>
-		<Definition>
+		<Definition xsi:type="MyObjectBuilder_ConveyorSorterDefinition">
 			<Id>
-				<TypeId>CubeBlock</TypeId>
+				<TypeId>ConveyorSorter</TypeId>
 				<SubtypeId>Alter</SubtypeId>
 			</Id>
-			<DisplayName>DisplayName_Alter</DisplayName>
-			<Description>Description_Alter</Description>
-			<Icon>Textures\GUI\Icons\AstronautBackpack.dds</Icon>
+			<DisplayName>Alter</DisplayName>
+			<Description>Don't panic uwu.</Description>
+			<Icon>Textures\GUI\Icons\Cubes\Alter.png</Icon>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
 			<Size x="3" y="4" z="1"/>

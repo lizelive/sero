@@ -3,7 +3,12 @@
     <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Textures\GUI\Icons\Cubes\medbay\" />
+    <Compile Remove="Data\Models\obj\**" />
+    <EmbeddedResource Remove="Data\Models\obj\**" />
+    <None Remove="Data\Models\obj\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="../paths.props" />
 </Project>
