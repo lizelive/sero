@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sero", "sero\sero.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "medbay", "medbay\medbay.csproj", "{2E968857-D7A3-4B66-B28C-78AEEB96C010}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dontstealmods", "dontstealmods\dontstealmods.csproj", "{A6BD129E-8581-4AD0-AAD6-FFB4067118D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2E968857-D7A3-4B66-B28C-78AEEB96C010}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E968857-D7A3-4B66-B28C-78AEEB96C010}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E968857-D7A3-4B66-B28C-78AEEB96C010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6BD129E-8581-4AD0-AAD6-FFB4067118D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6BD129E-8581-4AD0-AAD6-FFB4067118D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6BD129E-8581-4AD0-AAD6-FFB4067118D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6BD129E-8581-4AD0-AAD6-FFB4067118D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

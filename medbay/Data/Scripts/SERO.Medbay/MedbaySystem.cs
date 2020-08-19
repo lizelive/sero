@@ -32,7 +32,7 @@ namespace SERO
             MyVisualScriptLogicProvider.PlayerSpawned += PlayerSpawned;
         }
 
-        private MedbaysRequireMaterials Nearest(IMyPlayer player)
+        private ClonesRequireMaterials Nearest(IMyPlayer player)
         {
             Vector3D position = player.GetPosition();
 
@@ -41,11 +41,11 @@ namespace SERO
             List<MyEntity> entities = MyEntities.GetEntitiesInSphere(ref sphere);
 
             double minDist = double.PositiveInfinity;
-            MedbaysRequireMaterials nearest = null;
+            ClonesRequireMaterials nearest = null;
 
             foreach (MyEntity entity in entities)
             {
-                var medicalRoom = entity.Components.Get<MedbaysRequireMaterials>();
+                var medicalRoom = entity.Components.Get<ClonesRequireMaterials>();
 
                 if (medicalRoom == null)
                     continue;

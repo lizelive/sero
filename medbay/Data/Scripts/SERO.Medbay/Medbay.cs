@@ -25,11 +25,25 @@ namespace SERO
     // https://github.com/KeenSoftwareHouse/SpaceEngineers/blob/a109106fc0ded66bdd5da70e099646203c56550f/Sources/SpaceEngineers.Game/Entities/Blocks/MyMedicalRoom.cs
     [MyEntityComponentDescriptor(typeof(MyObjectBuilder_MedicalRoom), false)]
 
-    public class MedbaysRequireMaterials : MyGameLogicComponent
+
+    public class MedbaysRequireMaterials : ClonesRequireMaterials
+    {
+
+    }
+
+    [MyEntityComponentDescriptor(typeof(MyObjectBuilder_SurvivalKit), false)]
+
+
+    public class SurvivalkitRequireMaterials : ClonesRequireMaterials
+    {
+
+    }
+
+    public class ClonesRequireMaterials : MyGameLogicComponent
     {
 
         static readonly Guid BloodStoredGuid = new Guid("8b52d306-1052-422d-b3cd-285634122473");
-        IMyMedicalRoom block;
+        IMyFunctionalBlock block;
 
         public override void OnRemovedFromScene()
         { 
@@ -97,7 +111,7 @@ namespace SERO
                 return;
 
 
-            block = (IMyMedicalRoom)Entity;
+            block = (IMyFunctionalBlock)Entity;
 
             DoLoad();
 
@@ -131,6 +145,7 @@ namespace SERO
 
             // setup resources
             sink = Entity.Components.Get<MyResourceSinkComponent>();
+
 
             var fleshSink = new MyResourceSinkInfo()
             {

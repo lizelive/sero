@@ -1,24 +1,27 @@
 <?xml version="1.0" ?>
 <Definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<CubeBlocks>
-		<Definition xsi:type="MyObjectBuilder_ConveyorSorterDefinition">
+		<Definition>
 			<Id>
-				<TypeId>ConveyorSorter</TypeId>
-				<SubtypeId>Alter</SubtypeId>
+				<TypeId>CubeBlock</TypeId>
+				<SubtypeId>Altar</SubtypeId>
 			</Id>
-			<DisplayName>Alter</DisplayName>
-			<Description>Don't panic uwu.</Description>
-			<Icon>Textures\GUI\Icons\Cubes\Alter.png</Icon>
+			<DisplayName>DisplayName_Altar</DisplayName>
+			<Description>Description_Altar</Description>
+			<Icon>Textures\GUI\Icons\AstronautBackpack.dds</Icon>
 			<CubeSize>Large</CubeSize>
 			<BlockTopology>TriangleMesh</BlockTopology>
-			<Size x="3" y="4" z="1"/>
+			<Size x="1" y="1" z="1"/>
 			<ModelOffset x="0" y="0" z="0"/>
-			<Model>Models\Alter.mwm</Model>
+			<Model>Models\Altar.mwm</Model>
 			<Components>
 				<Component Count="10" Subtype="SteelPlate"/>
 			</Components>
 			<CriticalComponent Index="0" Subtype="SteelPlate"/>
-			<BlockPairName>Alter</BlockPairName>
+			<MountPoints>
+				<MountPoint Side="Bottom" StartX="0.0" StartY="0.0" EndX="1.0" EndY="1.0"/>
+			</MountPoints>
+			<BlockPairName>Altar</BlockPairName>
 		</Definition>
 	</CubeBlocks>
 </Definitions>
