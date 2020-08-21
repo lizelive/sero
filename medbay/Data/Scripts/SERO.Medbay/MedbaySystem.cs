@@ -63,7 +63,7 @@ namespace SERO
 
         private void PlayerSpawned(long playerId)
         {
-            var player = GetPlayer(playerId);
+            var player = U.GetPlayer(playerId);
             var neart = Nearest(player);
 
             MyVisualScriptLogicProvider.SetPlayersHydrogenLevel(player.Identity.IdentityId, 0);
@@ -79,7 +79,7 @@ namespace SERO
 
         private void PlayerConnected(long playerId)
         {
-            var player = GetPlayer(playerId);
+            var player = U.GetPlayer(playerId);
             if (player == null)
                 return;
             if (player.Character == null)
@@ -102,12 +102,7 @@ namespace SERO
             }
         }
 
-        private static IMyPlayer GetPlayer(long playerId)
-        {
-            var players = new List<IMyPlayer>();
-            MyAPIGateway.Players.GetPlayers(players, p => p != null && p.IdentityId == playerId);
-            return players.FirstOrDefault();
-        }
+
 
 
         /// <summary>
@@ -116,7 +111,7 @@ namespace SERO
         /// <param name="playerId"></param>
         private void PlayerDied(long playerId)
         {
-            var player = GetPlayer(playerId);
+            var player = U.GetPlayer(playerId);
             if (player == null)
                 return;
         }
