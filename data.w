@@ -85,7 +85,8 @@ glucose = chemicalAtoms["Glucose"];
 aminoAcid=Expand@Mean[WeightedData[chemicalAtoms/@aminoAcids[[All,1]],aminoAcids[[All,2]]]];
 fat=108hydrogen+54carbon+6oxygen;
 air=4*nitrogen+oxygen;
-
+biodiesel = 19 carbon + 34 hydrogen + 2 oxygen
+(*methyl linoleate*)
 elements={hydrogen,carbon,nitrogen,oxygen};
 elementWeights={1,12,14,16};
 parts={water,fat,glucose,aminoAcid};
@@ -103,4 +104,16 @@ r=b-m.flat;
 
 2 mole glucose => 1 mole agarose + 1 mole water
 
+agarose=Expand[2 glucose-1 water];
+
 6 parts water, 2 parts fat, 1 part agarose, 1 part amino acids
+
+
+agarose=Expand[2glucose-1water];
+cyclohexane=6 carbon + 12 hydrogen
+biodiesel = 19 carbon + 34 hydrogen + 2 oxygen
+Expand[8human-(2air+180water+4biodiesel+20 carbon)]
+Expand[8human-(2air+190water+96carbon+116hydrogen)]
+Expand[8human-(2air+8agarose+102water+116hydrogen)]
+human->5 air+19 water+2 cyclohexane
+human -> 31 water+12 carbon
