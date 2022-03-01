@@ -19,10 +19,10 @@ adds electronic warfare, detecting emr
 * Hydrogen = Fuel = 2 H2 + 1 O2
 
 ## added gasses
-* CO2
-* H2
-* O2
-* N2
+* CarbonDioxide = CO2
+* MolecularHydrogen = H2
+* MolecularOxygen = O2
+* MolecularNitrogen = N2
 * Glucose = C6H12O6
 * Biomass = Glucose + 6 Water
 * Water = H2O

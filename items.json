@@ -1,0 +1,60 @@
+{
+    "chemicals": [
+        {
+            "name": "MolecularOxygen",
+            "volume": {},
+            "mass": 0.031998
+        },
+        {
+            "name": "CarbonDioxide",
+            "volume": {},
+            "mass": 0.044009
+        },
+        {
+            "name": "MolecularHydrogen",
+            "volume": {},
+            "mass": 0.031998
+        },
+        {
+            "name": "MolecularNitrogen",
+            "volume": {},
+            "mass": 0.031998
+        },
+        {
+            "name": "LGlucose",
+            "volume": {},
+            "mass": 0.031998,
+            "formula" : "C5H12"
+        },
+        {
+            "name": "Biomass",
+            "volume": {},
+            "mass": 0.031998
+        },
+        {
+            "name": "Water",
+            "volume": {},
+            "mass": 0.002016
+        },
+        {
+            "name": "Air",
+            "volume": {},
+            "mass": 0.002016
+        },
+        {
+            "name": "CarbonatedAir",
+            "volume": {},
+            "mass": 0.002016
+        },
+        {
+            "name": "MolecularChlorine",
+            "volume": {},
+            "mass": 0.002016
+        }
+    ],
+    "items": [
+        {
+            "name": "Mos"
+        }
+    ]
+}
