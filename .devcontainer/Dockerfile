@@ -1,4 +1,4 @@
-FROM cm2network/steamcmd:root as download
+FROM cm2network/steamcmd as download
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends wget ca-certificates lib32z1
@@ -20,7 +20,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/dotnet:0-3.1
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends mono-devel
 
-
+RUN sudo dpkg --add-architecture i386
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
     file \
@@ -50,13 +50,27 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     pciutils \
     zenity \
     libopenal1 \
-    bumblebee bumblebee-nvidia primus linux-headers-generic
-    
+    bumblebee bumblebee-nvidia primus linux-headers-generic wine wine32 winetricks
+
 # insall steam
 RUN TEMP_DEB="$(mktemp --suffix=.deb)" \
     && wget -O "$TEMP_DEB" https://cdn.cloudflare.steamstatic.com/client/installer/steam.deb \
     && apt-get -y install --no-install-recommends  "$TEMP_DEB" \
     && rm -f "$TEMP_DEB"
+
+# RUN winetricks dotnet45
+
+COPY --from=download /server/DedicatedServer64 /se/DedicatedServer64
+
+RUN mkdir /se/ && echo 244850 > /se/steam_appid.txt
+
+RUN TEMP_ZIP="$(mktemp --suffix=.zip)" \
+    && wget -O "${TEMP_ZIP}" https://github.com/Gwindalmir/SEWorkshopTool/releases/download/v0.7.15-alpha/SEWorkshopTool-v0.7.15.zip \
+    && unzip -d /se/DedicatedServer64/ "${TEMP_ZIP}" \
+    && rm -f "${TEMP_ZIP}"
+
+RUN chown vscode -R /se/
+
+
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
-COPY --from=download /server /server

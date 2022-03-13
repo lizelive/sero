@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>   
+    <Platforms>AMD64</Platforms>
   </PropertyGroup>
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <SEGameBinPath>/server/DedicatedServer64/</SEGameBinPath>
+    <SEGameBinPath>/se/DedicatedServer64/</SEGameBinPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Sandbox.Common">
