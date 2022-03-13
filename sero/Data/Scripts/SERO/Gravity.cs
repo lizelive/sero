@@ -8,6 +8,7 @@ using VRageMath;
 using VRage.ObjectBuilders;
 using VRage.Game.Components;
 using VRage.ModAPI;
+using SpaceEngineers.Game.ModAPI;
 
 namespace SERO
 {
@@ -66,7 +67,7 @@ namespace SERO
                 if (_spherical)
                 {
                     var block = m_block as IMyGravityGeneratorSphere;
-                    _strength = block.Gravity;
+                    _strength = block.GravityAcceleration;
                     distance = block.Radius;
                     _range = distance;
                     Vector3D minPos = new Vector3D(myPos.GetDim(0) - distance, myPos.GetDim(1) - distance, myPos.GetDim(2) - distance);
@@ -76,7 +77,7 @@ namespace SERO
                 else
                 {
                     var block = m_block as IMyGravityGenerator;
-                    _strength = block.Gravity;
+                    _strength = block.GravityAcceleration;
                     field = block.FieldSize;
                     _range = field.GetDim(2) / 2;
                     Vector3D minPos = new Vector3D(myPos.GetDim(0) - field.GetDim(0), myPos.GetDim(1) - field.GetDim(1), myPos.GetDim(2) - field.GetDim(2));

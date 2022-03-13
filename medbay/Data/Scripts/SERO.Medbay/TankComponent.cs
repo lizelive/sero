@@ -33,7 +33,7 @@ namespace SERO
         public float MaxRate { get; set; }
 
 
-        
+
         public virtual bool Provide { get; set; }
         public virtual bool Take { get; set; }
     }
@@ -70,7 +70,7 @@ namespace SERO
             readonly TankComponent Tank;
             internal readonly MyResourceSinkInfo sinkInfo;
             internal readonly MyResourceSourceInfo sourceInfo;
-             
+
             public SubTankImpl(TankComponent tank, ISubTankDef def)
             {
                 Tank = tank;
@@ -100,7 +100,7 @@ namespace SERO
             {
                 var doTake = Tank.Block.IsWorking && Take;
                 //var take = Take && Tank.Block.IsWorking;
-                return doTake? Tank.Sink.CurrentInputByType(StoresId) : 0;
+                return doTake ? Tank.Sink.CurrentInputByType(StoresId) : 0;
             }
 
             public bool DoProvide
@@ -109,14 +109,17 @@ namespace SERO
                 {
 
                     return Tank.Source.ProductionEnabledByType(StoresId);
-                } set { Tank.Source.SetProductionEnabledByType(StoresId, value && Provide); } }
+                }
+                set { Tank.Source.SetProductionEnabledByType(StoresId, value && Provide); }
+            }
 
             private double stored;
 
             public double Stored
             {
                 get { return stored; }
-                set {
+                set
+                {
                     // send data to clients. or just mark parent as dirty.
                     Tank.Source.SetRemainingCapacityByType(StoresId, (float)stored);
                     stored = value;
@@ -222,7 +225,7 @@ namespace SERO
             }
 
             Source = Entity.Components.Get<MyResourceSourceComponent>();
-            
+
             if (Source == null)
             {
                 Source = new MyResourceSourceComponent();
@@ -246,7 +249,7 @@ namespace SERO
             {
                 arg2.AppendLine($"Tank {subTank.StoresId.SubtypeName} {subTank.Stored} / {subTank.Capacity} L");
             }
-            
+
         }
 
         // private void UpdateData(IMyCubeBlock obj)
@@ -270,7 +273,7 @@ namespace SERO
             {
                 subTank.Update();
             }
-            
+
             Sink.Update();
             Block.RefreshCustomInfo();
         }

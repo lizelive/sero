@@ -1,79 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <!-- 
-    You can safely exclude this file from code repositories and use different 
-    user settings per machine.
-    -->
-    <MDKVersion>1.2.31</MDKVersion>
-    <MDKUseGameBinPath>no</MDKUseGameBinPath>
-    <SEGameBinPath>D:\games\SteamLibrary\SteamApps\common\SpaceEngineers\Bin64</SEGameBinPath>
-    <MDKInstallPath>c:\users\lize\appdata\local\microsoft\visualstudio\16.0_12810a30\extensions\nupbjyxw.nio</MDKInstallPath>
-    <MDKOutputPath>C:\Users\Lize\AppData\Roaming\SpaceEngineers\IngameScripts\local</MDKOutputPath>
+    <SEGameBinPath>/server/DedicatedServer64/</SEGameBinPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Sandbox.Common">
-      <HintPath>$(SEGameBinPath)\Sandbox.Common.dll</HintPath>
+      <HintPath>$(SEGameBinPath)Sandbox.Common.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Sandbox.Game">
-      <HintPath>$(SEGameBinPath)\Sandbox.Game.dll</HintPath>
+      <HintPath>$(SEGameBinPath)Sandbox.Game.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Sandbox.Graphics">
-      <HintPath>$(SEGameBinPath)\Sandbox.Graphics.dll</HintPath>
+      <HintPath>$(SEGameBinPath)Sandbox.Graphics.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="SpaceEngineers.Game">
-      <HintPath>$(SEGameBinPath)\SpaceEngineers.Game.dll</HintPath>
+      <HintPath>$(SEGameBinPath)SpaceEngineers.Game.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="SpaceEngineers.ObjectBuilders">
-      <HintPath>$(SEGameBinPath)\SpaceEngineers.ObjectBuilders.dll</HintPath>
+      <HintPath>$(SEGameBinPath)SpaceEngineers.ObjectBuilders.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="VRage">
-      <HintPath>$(SEGameBinPath)\VRage.dll</HintPath>
+      <HintPath>$(SEGameBinPath)VRage.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="VRage.Audio">
-      <HintPath>$(SEGameBinPath)\VRage.Audio.dll</HintPath>
+      <HintPath>$(SEGameBinPath)VRage.Audio.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="VRage.Game">
-      <HintPath>$(SEGameBinPath)\VRage.Game.dll</HintPath>
+      <HintPath>$(SEGameBinPath)VRage.Game.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="VRage.Input">
-      <HintPath>$(SEGameBinPath)\VRage.Input.dll</HintPath>
+      <HintPath>$(SEGameBinPath)VRage.Input.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="VRage.Library">
-      <HintPath>$(SEGameBinPath)\VRage.Library.dll</HintPath>
+      <HintPath>$(SEGameBinPath)VRage.Library.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="VRage.Math">
-      <HintPath>$(SEGameBinPath)\VRage.Math.dll</HintPath>
+      <HintPath>$(SEGameBinPath)VRage.Math.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="VRage.Render">
-      <HintPath>$(SEGameBinPath)\VRage.Render.dll</HintPath>
+      <HintPath>$(SEGameBinPath)VRage.Render.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="VRage.Render11">
-      <HintPath>$(SEGameBinPath)\VRage.Render11.dll</HintPath>
+      <HintPath>$(SEGameBinPath)VRage.Render11.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="VRage.Scripting">
-      <HintPath>$(SEGameBinPath)\VRage.Scripting.dll</HintPath>
+      <HintPath>$(SEGameBinPath)VRage.Scripting.dll</HintPath>
       <Private>false</Private>
-    </Reference>
-    <Reference Include="MDKUtilities">
-      <HintPath>$(MDKInstallPath)\MDKUtilities.dll</HintPath>
-      <Private>true</Private>
     </Reference>
   </ItemGroup>
 </Project>
