@@ -234,7 +234,7 @@ namespace SERO
 
             var subTanks = tankDefs.Select(def => new SubTankImpl(this, def)).ToList();
 
-            Sink.Init(MyStringHash.GetOrCompute("Factory"), subTanks.Select(x => x.sinkInfo).ToList());
+            Sink.Init(MyStringHash.GetOrCompute("Factory"), subTanks.Select(x => x.sinkInfo).ToList(), null);
             Source.Init(MyStringHash.GetOrCompute("Reactors"), subTanks.Select(x => x.sourceInfo).ToList());
         }
 
